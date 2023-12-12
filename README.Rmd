@@ -1,0 +1,60 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# iv.sensemakr: Sensitivity Analysis Tools for Instrumental Variables
+
+`iv.sensemakr` implements a suite of sensitivity analysis tools for instrumental variable estimates, as discussed in [Cinelli, C. and Hazlett, C. (2023) "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables".](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20(2020)%20-%20OVB%20for%20IV.pdf) 
+
+##  Development version
+
+To install the development version on GitHub make sure you have the package `devtools` installed.
+
+```{r, eval = FALSE}
+# install.packages("devtools") 
+devtools::install_github("carloscinelli/sensemakr")
+```
+
+# Basic usage
+
+```{r basic-usage, fig.align='center', collapse=T, dpi=400, fig.width=10}
+# loads package
+library(iv.sensemakr)
+
+# loads dataset
+data("card")
+
+# prepares data
+y <- card$lwage  # outcome
+d <- card$educ   # treatment
+z <- card$nearc4 # instrument
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card) # covariates
+# fits IV model
+card.fit <- iv_fit(y,d,z,x)
+
+# see results
+card.fit
+
+# runs sensitivity analysis
+card.sens <- sensemakr(card.fit, benchmark_covariates = c("black", "smsa"))
+
+# see results
+card.sens
+
+# sensitivity contour plot
+plot(card.sens, lim = 0.09)
+```
+

@@ -1,0 +1,21 @@
+Package: iv.sensemakr
+Type: Package
+Title: Sensitivity Analysis Tool for Instrumental Variable Estimates
+Version: 0.1.0
+Author: Carlos Cinelli [aut, cre],
+  Chad Hazlett [aut]
+Maintainer: Carlos Cinelli <carloscinelli@hotmail.com>
+Description: Implements a suite of sensitivity analysis tools for instrumental variable estimates
+  as described in Cinelli and Hazlett (2023) "An omitted variable bias framework for 
+  sensitivity analysis of instrumental variables."
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.2.3
+Imports:
+  sensemakr
+Depends: 
+    R (>= 2.10)
