@@ -16,7 +16,7 @@ package `devtools` installed.
 
 ``` r
 # install.packages("devtools") 
-devtools::install_github("carloscinelli/sensemakr")
+devtools::install_github("carloscinelli/iv.sensemakr")
 ```
 
 # Basic usage

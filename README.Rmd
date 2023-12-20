@@ -23,7 +23,7 @@ To install the development version on GitHub make sure you have the package `dev
 
 ```{r, eval = FALSE}
 # install.packages("devtools") 
-devtools::install_github("carloscinelli/sensemakr")
+devtools::install_github("carloscinelli/iv.sensemakr")
 ```
 
 # Basic usage
