@@ -19,6 +19,14 @@ package `devtools` installed.
 devtools::install_github("carloscinelli/iv.sensemakr")
 ```
 
+Please also make sure you have the latest version of `sensemakr`
+installed.
+
+``` r
+# install.packages("devtools") 
+devtools::install_github("carloscinelli/sensemakr")
+```
+
 # Basic usage
 
 ``` r

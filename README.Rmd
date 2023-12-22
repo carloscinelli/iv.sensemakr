@@ -26,6 +26,13 @@ To install the development version on GitHub make sure you have the package `dev
 devtools::install_github("carloscinelli/iv.sensemakr")
 ```
 
+Please also make sure you have the latest version of `sensemakr` installed.
+
+```{r, eval = FALSE}
+# install.packages("devtools") 
+devtools::install_github("carloscinelli/sensemakr")
+```
+
 # Basic usage
 
 ```{r basic-usage, fig.align='center', collapse=T, dpi=400, fig.width=10}
