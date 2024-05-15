@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# iv.sensemakr: Sensitivity Analysis Tools for Instrumental Variables
+# iv.sensemakr: Sensitivity Analysis Tools for IV
 
 `iv.sensemakr` implements a suite of sensitivity analysis tools for
 instrumental variable estimates, as discussed in [Cinelli, C. and

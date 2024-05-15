@@ -62,3 +62,33 @@ An object of class \code{iv.sensemakr}, containing:
 This function performs sensitivity analysis of instrumental variable estimates, as discussed in Cinelli and Hazlett (2023).
 The main input is an object of class \code{\link{iv_fit}}. It returns an object of class \code{iv.sensemakr} with several pre-computed sensitivity statistics for reporting. After running \code{sensemakr} you may directly use the \code{plot}, \code{print} and \code{summary} methods in the returned object.
 }
+\examples{
+
+# loads package
+library(iv.sensemakr)
+
+# loads dataset
+data("card")
+
+# prepares data
+y <- card$lwage  # outcome
+d <- card$educ   # treatment
+z <- card$nearc4 # instrument
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card) # covariates
+# fits IV model
+card.fit <- iv_fit(y,d,z,x)
+
+# see results
+card.fit
+
+# runs sensitivity analysis
+card.sens <- sensemakr(card.fit, benchmark_covariates = c("black", "smsa"))
+
+# see results
+card.sens
+
+# sensitivity contour plot
+plot(card.sens, lim = 0.09)
+}
