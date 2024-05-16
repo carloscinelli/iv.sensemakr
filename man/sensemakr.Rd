@@ -92,3 +92,6 @@ card.sens
 # sensitivity contour plot
 plot(card.sens, lim = 0.09)
 }
+\references{
+Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
+}

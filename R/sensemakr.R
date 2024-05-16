@@ -113,6 +113,9 @@ sensemakr <- sensemakr::sensemakr
 ##'
 ##' # sensitivity contour plot
 ##' plot(card.sens, lim = 0.09)
+##' @references
+##'
+##' Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
 ##' @rdname sensemakr
 sensemakr.iv_fit <- function(model,
                              benchmark_covariates = NULL,
@@ -275,13 +278,25 @@ print.iv.sensemakr <- function(x,digits = 3,...){
   cat("\n")
 }
 
-##' @export
+#' Sensitivity analysis print and summary methods for \code{iv.sensemakr}
+#'
+#' @description
+#' The \code{print} and \code{summary} methods provide verbal descriptions of the sensitivity analysis results
+#' obtained with the function \code{\link{sensemakr}}.
+#'
+#' @param ... arguments passed to other methods.
+#' @param object an object of class \code{\link{sensemakr}}.
+#' @param x an object of class \code{\link{sensemakr}}.
+#' @param digits minimal number of \emph{significant} digits.
+#' @export
+#' @rdname print.iv.sensemakr
 summary.iv.sensemakr <- function(object, ...){
   class(object) <- "summary.iv.sensemakr"
   object
 }
 
 ##' @export
+##' @rdname print.iv.sensemakr
 print.summary.iv.sensemakr <- function(x, digits = 3, ...){
   cat("\n")
   cat("Sensitivity Analysis for Instrumental Variables\n")
