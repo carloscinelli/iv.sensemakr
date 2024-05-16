@@ -52,7 +52,8 @@ Data used in Card (1995). Consists of a sample of 3,010 individuals from the Nat
 The treatment is \code{educ}, the outcome is \code{lwage} and the instrument is \code{nearc4}.
 }
 \examples{
- head(card)
+data('card')
+head(card)
 }
 \references{
 Card, D. "Using Geographic Variation in College Proximity to Estimate the Return to Schooling". In L.N. Christofides, E.K. Grant, and R. Swidinsky, editors, Aspects of Labor Market Behaviour: Essays in Honour of John Vanderkamp. Toronto: University of Toronto Press, 1995.
