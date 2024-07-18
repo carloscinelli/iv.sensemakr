@@ -177,6 +177,16 @@ sensitivity_stats.iv_fit <- function(model, parm = "iv", q = 1, alpha = 0.05, mi
   return(sensitivity_stats)
 }
 
+##' @inheritParams sensemakr
+##' @inheritParams ovb_contour_plot
+##' @exportS3Method sensemakr::sensitivity_stats iv.sensemakr
+##' @exportS3Method iv.sensemakr::sensitivity_stats iv.sensemakr
+##' @export
+##' @rdname sensitivity_stats
+sensitivity_stats.iv.sensemakr <- function(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...){
+  do.call("rbind", model$sensitivity_stats[parm])
+}
+
 get <- function(ests, what, fun = function(x) x, names = NULL){
   out <- sapply(ests, function(x) fun(x[[what]]))
   if (!is.null(names)) {

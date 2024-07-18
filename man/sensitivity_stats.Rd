@@ -3,11 +3,14 @@
 \name{sensitivity_stats}
 \alias{sensitivity_stats}
 \alias{sensitivity_stats.iv_fit}
+\alias{sensitivity_stats.iv.sensemakr}
 \title{Sensitivity statistics for instrumental variable estimates}
 \usage{
 sensitivity_stats(...)
 
 \method{sensitivity_stats}{iv_fit}(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...)
+
+\method{sensitivity_stats}{iv.sensemakr}(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...)
 }
 \arguments{
 \item{...}{further arguments passed to or from other methods.}
