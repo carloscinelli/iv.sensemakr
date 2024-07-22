@@ -4,7 +4,7 @@
 # iv.sensemakr: Sensitivity Analysis Tools for IV
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml)
+<!-- [![R-CMD-check](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml) -->
 <!-- badges: end -->
 
 `iv.sensemakr` implements a suite of sensitivity analysis tools for
