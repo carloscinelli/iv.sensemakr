@@ -3,6 +3,10 @@
 
 # iv.sensemakr: Sensitivity Analysis Tools for IV
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 `iv.sensemakr` implements a suite of sensitivity analysis tools for
 instrumental variable estimates, as discussed in [Cinelli, C. and
 Hazlett, C. (2023) “An Omitted Variable Bias Framework for Sensitivity
