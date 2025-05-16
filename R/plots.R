@@ -550,7 +550,7 @@ iv_adjusted_limit.lm <- function(fs,
   call.args   <- list(r2zw.x,
                       r2y0w.zx,
                       alpha = alpha,
-                      ci.limi = ci.limit,
+                      ci.limit = ci.limit,
                       max = max,
                       ...)
   iv.data     <- iv_model_helper(fs = fs, rf = rf, instrument = instrument)
