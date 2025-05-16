@@ -53,7 +53,7 @@ W with the instrument Z, given observed covariates X.}
 \item{ylab}{label of y axis. If `NULL`, default label is used.}
 }
 \description{
-Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimtes.
+Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimates.
 
 The main inputs are an \code{\link{iv_fit}} model, and the covariates used for benchmarking the strength of omitted variables.
 
