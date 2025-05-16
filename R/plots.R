@@ -106,7 +106,7 @@ plot.iv.sensemakr = function(x,
 ##' Contour plots of omitted variable bias for IV
 ##'
 ##' @description
-##' Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimtes.
+##' Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimates.
 ##'
 ##' The main inputs are an \code{\link{iv_fit}} model, and the covariates used for benchmarking the strength of omitted variables.
 ##'
