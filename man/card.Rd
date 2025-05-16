@@ -3,7 +3,7 @@
 \docType{data}
 \name{card}
 \alias{card}
-\title{National Longitudinal Survey of Young Men (NLSYN)}
+\title{National Longitudinal Survey of Young Men (NLSYM)}
 \format{
 A data.frame with 3010 observations and 34 variables:
 \itemize{
