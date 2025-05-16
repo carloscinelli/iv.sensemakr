@@ -341,7 +341,7 @@ print.summary.iv.sensemakr <- function(x, digits = 3, ...){
   if(!is.null(x$bounds$rf)){
     cat("Bounds on Omitted Variable Bias:")
     cat("\n")
-    print(setNames(x$bounds$rf, c("Bound Label", "R2zw.x", "R2dw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits,row.names = F)
+    print(setNames(x$bounds$rf, c("Bound Label", "R2zw.x", "R2yw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits,row.names = F)
     cat("\n")
   }
   cat("Note:",
