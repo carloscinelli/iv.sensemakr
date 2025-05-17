@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.github$
+
+^\.DS_Store$
+^tests/testthat/Rplots\.pdf$
