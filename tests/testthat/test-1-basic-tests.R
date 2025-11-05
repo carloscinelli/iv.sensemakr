@@ -13,6 +13,11 @@ test_that("Card Example", {
                        reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
                      data = card)
   card.fit <- iv_fit(y,d, z, x)
+  expect_equal(
+    as.numeric(coef(card.fit, parm = "iv")),
+    0.132,
+    tolerance = 1e-3
+  )
   card.fit
 
   summary(card.fit)

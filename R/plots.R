@@ -106,7 +106,7 @@ plot.iv.sensemakr = function(x,
 ##' Contour plots of omitted variable bias for IV
 ##'
 ##' @description
-##' Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimtes.
+##' Contour plots of omitted variable bias for sensitivity analysis of instrumental variable estimates.
 ##'
 ##' The main inputs are an \code{\link{iv_fit}} model, and the covariates used for benchmarking the strength of omitted variables.
 ##'
@@ -550,7 +550,7 @@ iv_adjusted_limit.lm <- function(fs,
   call.args   <- list(r2zw.x,
                       r2y0w.zx,
                       alpha = alpha,
-                      ci.limi = ci.limit,
+                      ci.limit = ci.limit,
                       max = max,
                       ...)
   iv.data     <- iv_model_helper(fs = fs, rf = rf, instrument = instrument)

@@ -1,4 +1,4 @@
-#' National Longitudinal Survey of Young Men (NLSYN)
+#' National Longitudinal Survey of Young Men (NLSYM)
 #'
 #' @description
 #'
