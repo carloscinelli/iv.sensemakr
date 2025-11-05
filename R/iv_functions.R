@@ -40,7 +40,14 @@ iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
   y <- check_num(y, "y")
   d <- check_num(d, "d")
   z <- check_num(z, "z")
+  if (!is.null(x)) {
+    x <- x[,apply(x, 2, var) != 0, drop = F]
+    x <- cbind("constant" = rep(1,nrow(x)), x)
+  } else {
+    x <- rep(1, length(y))
+  }
   x <- check_mat(x, "x")
+
 
   n <- c(ny = length(y), nd = length(d), nz = length(z), nx = nrow(x))
 
@@ -50,12 +57,7 @@ iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
          )
   }
 
-  if (!is.null(x)) {
-    x <- x[,apply(x, 2, var) != 0, drop = F]
-    x <- cbind("constant" = rep(1,nrow(x)), x)
-  } else {
-    x <- rep(1, length(y))
-  }
+
 
   mat <- na.omit(cbind(y,d,z,x))
 
