@@ -2,7 +2,10 @@ url: https://carloscinelli.com/iv.sensemakr/
 
 template:
   bootstrap: 5
-  bootswatch: cosmo
+  bslib:
+    bg: "#fff"
+    fg: "#222"
+    primary: "#222"
 
 authors:
   Carlos Cinelli:
@@ -11,6 +14,7 @@ authors:
     href: https://www.chadhazlett.com
 
 navbar:
+  bg: dark
   structure:
     left: [home, intro, reference]
     right: [github]
