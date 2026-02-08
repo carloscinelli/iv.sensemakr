@@ -6,6 +6,11 @@ template:
     bg: "#fff"
     fg: "#222"
     primary: "#222"
+    base_font:
+      google: "Source Sans Pro"
+    heading_font:
+      google: "Source Sans Pro"
+    font_scale: 0.9375
 
 authors:
   Carlos Cinelli:

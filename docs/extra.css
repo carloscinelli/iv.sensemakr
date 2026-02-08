@@ -1,0 +1,15 @@
+/* Make the homepage sidebar sticky on scroll */
+@media (min-width: 768px) {
+  .template-home aside.col-md-3 {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 56px;
+    max-height: calc(100vh - 56px - 1rem);
+    overflow-y: auto;
+  }
+}
+
+/* Match sensemakr heading sizes */
+h2 {
+  font-size: 1.5rem;
+}
