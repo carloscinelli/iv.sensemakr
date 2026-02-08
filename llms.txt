@@ -7,12 +7,26 @@ Analysis of Instrumental Variables”, *Biometrika*
 ([doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004);
 [PDF](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf)).
 
+## News
+
+- **Paper published in Biometrika!** Cinelli, C. and Hazlett, C. (2025),
+  “An Omitted Variable Bias Framework for Sensitivity Analysis of
+  Instrumental Variables.”
+  [doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004)
+  ([PDF](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf))
+- **Package website:** <https://carloscinelli.com/iv.sensemakr/>
+- **Talks:**
+  - [Sensitivity Analysis for Instrumental Variables – Iowa State
+    University](https://www.youtube.com/watch?v=0b5VYWh8fN4)
+  - [An OVB Framework for Sensitivity Analysis of IV – EuroCIM
+    2021](https://www.youtube.com/watch?v=ykZqPB1FPNo)
+
 ## Development version
 
 To install the development version on GitHub make sure you have the
 package `devtools` installed.
 
-``` R
+``` r
 # install.packages("devtools") 
 devtools::install_github("carloscinelli/iv.sensemakr")
 ```
@@ -20,14 +34,14 @@ devtools::install_github("carloscinelli/iv.sensemakr")
 Please also make sure you have the latest version of `sensemakr`
 installed.
 
-``` R
+``` r
 # install.packages("devtools") 
 devtools::install_github("carloscinelli/sensemakr")
 ```
 
 # Basic usage
 
-``` R
+``` r
 # loads package
 library(iv.sensemakr)
 
