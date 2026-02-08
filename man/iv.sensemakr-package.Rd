@@ -23,6 +23,7 @@ Sensitivity Analysis of Instrumental Variables." Biometrika.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://carloscinelli.com/iv.sensemakr/}
   \item \url{https://github.com/carloscinelli/iv.sensemakr}
   \item Report bugs at \url{https://github.com/carloscinelli/iv.sensemakr/issues}
 }
