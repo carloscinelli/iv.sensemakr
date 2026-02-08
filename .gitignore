@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-
-
-^\.DS_Store$
-^tests/testthat/Rplots\.pdf$
+.DS_Store
+.codex/
+README.html
+*.tar.gz
+tests/testthat/Rplots.pdf
