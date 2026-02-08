@@ -2,15 +2,7 @@ url: https://carloscinelli.com/iv.sensemakr/
 
 template:
   bootstrap: 5
-  bslib:
-    bg: "#fff"
-    fg: "#222"
-    primary: "#222"
-    base_font:
-      google: "Source Sans Pro"
-    heading_font:
-      google: "Source Sans Pro"
-    font_scale: 0.9375
+  bootswatch: cosmo
 
 authors:
   Carlos Cinelli:
