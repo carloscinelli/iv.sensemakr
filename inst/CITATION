@@ -1,0 +1,26 @@
+citHeader("To cite iv.sensemakr in publications use:")
+
+bibentry(
+  bibtype = "Manual",
+  title = "iv.sensemakr: Sensitivity Analysis Tools for Instrumental Variable Estimates",
+  author = c(
+    person("Carlos", "Cinelli"),
+    person("Chad", "Hazlett")
+  ),
+  year = "2026",
+  note = "R package version 0.1.0",
+  url = "https://github.com/carloscinelli/iv.sensemakr"
+)
+
+bibentry(
+  bibtype = "Article",
+  title = "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables",
+  author = c(
+    person("Carlos", "Cinelli"),
+    person("Chad", "Hazlett")
+  ),
+  journal = "Biometrika",
+  year = "2025",
+  doi = "10.1093/biomet/asaf004",
+  url = "https://doi.org/10.1093/biomet/asaf004"
+)

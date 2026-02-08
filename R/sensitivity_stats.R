@@ -18,7 +18,12 @@ rv <- sensemakr::rv
 ##' Computes the (extreme) robustness value for IV
 ##'
 ##' @description
-##' Description here.
+##' Computes robustness values for \code{\link{iv_fit}} objects, adapting the
+##' robustness value definitions of \pkg{sensemakr} to instrumental variables as
+##' described in Cinelli and Hazlett (2025).
+##' For \code{parm = "iv"}, returns robustness values for the IV estimate; for
+##' \code{parm = "fs"} or \code{parm = "rf"}, dispatches to \pkg{sensemakr}
+##' methods on the corresponding \code{\link{lm}} models.
 ##'
 ##'
 ##' @param model an \code{\link{iv_fit}} model
@@ -28,8 +33,11 @@ rv <- sensemakr::rv
 ##' @param min  in many cases, researchers are interested in biases as large or larger than a certain amount (for instance, the strength of confounding to bring a positive estimate to zero or below). Setting \code{min = TRUE} (default) computes the robustness value for such cases. Setting \code{min = FALSE} computes the robustness value for a bias of exactly \code{q}.
 ##' @param ... further arguments passed to or from other methods.
 ##'
+##' @references
+##'
+##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
+##'
 ##' @exportS3Method sensemakr::extreme_robustness_value iv_fit
-##' @exportS3Method iv.sensemakr::extreme_robustness_value iv_fit
 ##' @rdname robustness_value
 extreme_robustness_value.iv_fit <- function(model,
                                             parm = "iv",
@@ -56,7 +64,6 @@ extreme_robustness_value.iv_fit <- function(model,
 
 
 ##' @exportS3Method sensemakr::robustness_value iv_fit
-##' @exportS3Method iv.sensemakr::robustness_value iv_fit
 ##' @rdname robustness_value
 robustness_value.iv_fit <- function(model, parm = "iv", q=1, alpha=0.05, min = T, ...){
   check_alpha(alpha)
@@ -143,7 +150,6 @@ sensitivity_stats <- sensemakr::sensitivity_stats
 ##' @inheritParams ovb_contour_plot
 ##' @param ... further arguments passed to or from other methods.
 ##' @exportS3Method sensemakr::sensitivity_stats iv_fit
-##' @exportS3Method iv.sensemakr::sensitivity_stats iv_fit
 ##' @export
 ##' @rdname sensitivity_stats
 sensitivity_stats.iv_fit <- function(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...){
@@ -180,7 +186,6 @@ sensitivity_stats.iv_fit <- function(model, parm = "iv", q = 1, alpha = 0.05, mi
 ##' @inheritParams sensemakr
 ##' @inheritParams ovb_contour_plot
 ##' @exportS3Method sensemakr::sensitivity_stats iv.sensemakr
-##' @exportS3Method iv.sensemakr::sensitivity_stats iv.sensemakr
 ##' @export
 ##' @rdname sensitivity_stats
 sensitivity_stats.iv.sensemakr <- function(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...){

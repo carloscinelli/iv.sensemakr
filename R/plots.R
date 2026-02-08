@@ -114,12 +114,12 @@ plot.iv.sensemakr = function(x,
 ##'
 ##' if \code{parm = "fs"} or \code{parm = "rf"}, then contour plots of the first-stage and reduced-form regression are shown. See, e.g, \code{\link[sensemakr]{ovb_contour_plot.lm}}.
 ##'
-##' See Cinelli and Hazlett (2020, 2023) for details.
+##' See Cinelli and Hazlett (2020, 2025) for details.
 ##' @references
 ##'
 ##'  Cinelli, C. and Hazlett, C. (2020), "Making Sense of Sensitivity: Extending Omitted Variable Bias." Journal of the Royal Statistical Society, Series B (Statistical Methodology).
 ##'
-##' Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
+##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
 ##'
 ##' @export
 ovb_contour_plot <- sensemakr::ovb_contour_plot
@@ -156,7 +156,6 @@ ovb_contour_plot <- sensemakr::ovb_contour_plot
 ##'
 ##'
 ##' @exportS3Method sensemakr::ovb_contour_plot iv_fit
-##' @exportS3Method iv.sensemakr::ovb_contour_plot iv_fit
 ##' @rdname ovb_contour_plot
 ovb_contour_plot.iv_fit <- function(model,
                                     benchmark_covariates = NULL,
@@ -538,6 +537,8 @@ iv_adjusted_limit <- function(...){
 }
 
 
+##' @noRd
+##' @exportS3Method iv_adjusted_limit lm
 iv_adjusted_limit.lm <- function(fs,
                                  rf,
                                  instrument,
@@ -560,6 +561,8 @@ iv_adjusted_limit.lm <- function(fs,
 }
 
 
+##' @noRd
+##' @exportS3Method iv_adjusted_limit numeric
 iv_adjusted_limit.numeric <- function(fs.coef,
                                       fs.se,
                                       rf.coef,
@@ -864,4 +867,3 @@ check_abc_length <- function(a,b,c){
   }
   return(invisible(na))
 }
-

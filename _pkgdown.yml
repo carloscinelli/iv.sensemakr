@@ -1,0 +1,48 @@
+url: https://carloscinelli.com/iv.sensemakr/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+
+authors:
+  Carlos Cinelli:
+    href: https://carloscinelli.com
+  Chad Hazlett:
+    href: https://www.chadhazlett.com
+
+navbar:
+  structure:
+    left: [home, intro, reference]
+    right: [github]
+  components:
+    intro:
+      text: Get Started
+      href: articles/iv.sensemakr.html
+
+reference:
+  - title: IV Estimation
+    desc: Fit instrumental variable models using the Anderson-Rubin approach.
+    contents:
+      - iv_fit
+      - coef.iv_fit
+      - summary.iv_fit
+
+  - title: Sensitivity Analysis
+    desc: Perform sensitivity analysis of IV estimates.
+    contents:
+      - sensemakr
+      - sensitivity_stats
+      - robustness_value
+      - coef.iv.sensemakr
+      - summary.iv.sensemakr
+
+  - title: Visualization
+    desc: Contour plots for sensitivity analysis.
+    contents:
+      - ovb_contour_plot
+      - plot.iv.sensemakr
+
+  - title: Data
+    desc: Datasets included in the package.
+    contents:
+      - card

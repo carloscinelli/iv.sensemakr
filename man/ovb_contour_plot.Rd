@@ -61,7 +61,7 @@ If \code{parm = "iv"} (default) contour plots of the IV estimate are shown. The 
 
 if \code{parm = "fs"} or \code{parm = "rf"}, then contour plots of the first-stage and reduced-form regression are shown. See, e.g, \code{\link[sensemakr]{ovb_contour_plot.lm}}.
 
-See Cinelli and Hazlett (2020, 2023) for details.
+See Cinelli and Hazlett (2020, 2025) for details.
 }
 \details{
 Other parameters include:
@@ -88,5 +88,5 @@ If \code{parm = "fs"} or \code{parm = "rf"} the function is simply a wrapper to 
 \references{
 Cinelli, C. and Hazlett, C. (2020), "Making Sense of Sensitivity: Extending Omitted Variable Bias." Journal of the Royal Statistical Society, Series B (Statistical Methodology).
 
-Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
+Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
 }

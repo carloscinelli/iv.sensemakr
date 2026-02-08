@@ -59,7 +59,7 @@ An object of class \code{iv.sensemakr}, containing:
  }
 }
 \description{
-This function performs sensitivity analysis of instrumental variable estimates, as discussed in Cinelli and Hazlett (2023).
+This function performs sensitivity analysis of instrumental variable estimates, as discussed in Cinelli and Hazlett (2025).
 The main input is an object of class \code{\link{iv_fit}}. It returns an object of class \code{iv.sensemakr} with several pre-computed sensitivity statistics for reporting. After running \code{sensemakr} you may directly use the \code{plot}, \code{print} and \code{summary} methods in the returned object.
 }
 \examples{
@@ -93,5 +93,5 @@ card.sens
 plot(card.sens, lim = 0.09)
 }
 \references{
-Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
+Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
 }

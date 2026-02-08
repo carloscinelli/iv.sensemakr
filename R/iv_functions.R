@@ -4,7 +4,7 @@
 ##'
 ##' @description
 ##'
-##' \code{iv_fit} computes instrumental variable estimates and confidence intervals using the Anderson-Rubin (AR) approach (Anderson and Rubin, 1949).  This approach is numerically identical to Fieller's theorem (Fieller, 1954). See Cinelli and Hazlett (2023) for further discussion.
+##' \code{iv_fit} computes instrumental variable estimates and confidence intervals using the Anderson-Rubin (AR) approach (Anderson and Rubin, 1949).  This approach is numerically identical to Fieller's theorem (Fieller, 1954). See Cinelli and Hazlett (2025) for further discussion.
 ##'
 ##' The AR point estimate is numerically identical to the point estimate of two-stage least squares (2SLS) and it is given by the ratio of the reduced-form to the first-stage regression coefficient. Confidence intervals, however, are constructed differently. 2SLS is equivalent to using the delta-method to obtain the variance of the ratio estimator, and then proceeding by assuming the ratio is asymptotically normal. This approximation can fail when instruments are "weak." The Anderson-Rubin approach instead uses a test inversion procedure to construct confidence intervals. This procedure has correct coverage regardless of instrument strength, at the (inevitable) cost of eventually obtaining unbounded confidence intervals.
 ##'
@@ -33,7 +33,7 @@
 ##'
 ##' Fieller, E. C. (1954). Some problems in interval estimation. Journal of the Royal Statistical Society: Series B (Methodological), 16(2), 175-185.
 ##'
-##' Cinelli, C. and Hazlett, C. (2023), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables."
+##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
 ##' @export
 iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
 
@@ -423,7 +423,6 @@ printCI <- function(ci, digits = 3){
 }
 
 rho <- function(fs, rf) cor(resid(fs), resid(rf))
-
 
 
 

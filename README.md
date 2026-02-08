@@ -8,10 +8,11 @@
 <!-- badges: end -->
 
 `iv.sensemakr` implements a suite of sensitivity analysis tools for
-instrumental variable estimates, as discussed in [Cinelli, C. and
-Hazlett, C. (2024+) “An Omitted Variable Bias Framework for Sensitivity
-Analysis of Instrumental Variables”. Forthcoming in
-Biometrika.](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf)
+instrumental variable estimates, as discussed in Cinelli, C. and Hazlett,
+C. (2025) “An Omitted Variable Bias Framework for Sensitivity Analysis of
+Instrumental Variables”, *Biometrika*
+([doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004);
+[PDF](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf)).
 
 ## Development version
 
