@@ -22,6 +22,8 @@ for Sensitivity Analysis of Instrumental Variables." Biometrika.
 
 Useful links:
 
+- <https://carloscinelli.com/iv.sensemakr/>
+
 - <https://github.com/carloscinelli/iv.sensemakr>
 
 - Report bugs at <https://github.com/carloscinelli/iv.sensemakr/issues>
