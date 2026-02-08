@@ -47,87 +47,83 @@
 <div class="page-header"><h1 id="ivsensemakr-sensitivity-analysis-tools-for-iv">iv.sensemakr: Sensitivity Analysis Tools for IV<a class="anchor" aria-label="anchor" href="#ivsensemakr-sensitivity-analysis-tools-for-iv"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- [![R-CMD-check](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml) -->
-<!-- badges: end -->
+
 <p><code>iv.sensemakr</code> implements a suite of sensitivity analysis tools for instrumental variable estimates, as discussed in Cinelli, C. and Hazlett, C. (2025) “An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables”, <em>Biometrika</em> (<a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">doi:10.1093/biomet/asaf004</a>; <a href="https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf" class="external-link">PDF</a>).</p>
 <div class="section level2">
 <h2 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h2>
 <p>To install the development version on GitHub make sure you have the package <code>devtools</code> installed.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools") </span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"carloscinelli/iv.sensemakr"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># install.packages("devtools") </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"carloscinelli/iv.sensemakr"</span>)</span></code></pre></div>
 <p>Please also make sure you have the latest version of <code>sensemakr</code> installed.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools") </span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"carloscinelli/sensemakr"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># install.packages("devtools") </span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"carloscinelli/sensemakr"</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
 <h1 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h1>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># loads package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carloscinelli.com/iv.sensemakr/">iv.sensemakr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># loads dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"card"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># prepares data</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">lwage</span>  <span class="co"># outcome</span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">educ</span>   <span class="co"># treatment</span></span>
-<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">nearc4</span> <span class="co"># instrument</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">south</span> <span class="op">+</span> <span class="va">smsa</span> <span class="op">+</span> <span class="va">reg661</span> <span class="op">+</span> <span class="va">reg662</span> <span class="op">+</span></span>
-<span>                     <span class="va">reg663</span> <span class="op">+</span> <span class="va">reg664</span> <span class="op">+</span> <span class="va">reg665</span><span class="op">+</span> <span class="va">reg666</span> <span class="op">+</span> <span class="va">reg667</span> <span class="op">+</span> <span class="va">reg668</span> <span class="op">+</span> <span class="va">smsa66</span>,</span>
-<span>                   data <span class="op">=</span> <span class="va">card</span><span class="op">)</span> <span class="co"># covariates</span></span>
-<span><span class="co"># fits IV model</span></span>
-<span><span class="va">card.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/iv_fit.html">iv_fit</a></span><span class="op">(</span><span class="va">y</span>,<span class="va">d</span>,<span class="va">z</span>,<span class="va">x</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># see results</span></span>
-<span><span class="va">card.fit</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Instrumental Variable Estimation</span></span>
-<span><span class="co">#&gt; (Anderson-Rubin Approach)</span></span>
-<span><span class="co">#&gt; =============================================</span></span>
-<span><span class="co">#&gt; IV Estimates:</span></span>
-<span><span class="co">#&gt;   Coef. Estimate: 0.132</span></span>
-<span><span class="co">#&gt;   t-value: 2.33</span></span>
-<span><span class="co">#&gt;   p-value: 0.02</span></span>
-<span><span class="co">#&gt;   Conf. Interval: [0.025, 0.285]</span></span>
-<span><span class="co">#&gt; Note: H0 = 0, alpha = 0.05, df = 2994.</span></span>
-<span><span class="co">#&gt; =============================================</span></span>
-<span><span class="co">#&gt; See summary for first stage and reduced form.</span></span>
-<span></span>
-<span><span class="co"># runs sensitivity analysis</span></span>
-<span><span class="va">card.sens</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sensemakr.html">sensemakr</a></span><span class="op">(</span><span class="va">card.fit</span>, benchmark_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"smsa"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># see results</span></span>
-<span><span class="va">card.sens</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Sensitivity Analysis for Instrumental Variables</span></span>
-<span><span class="co">#&gt; (Anderson-Rubin Approach)</span></span>
-<span><span class="co">#&gt; =============================================================</span></span>
-<span><span class="co">#&gt; IV Estimates:</span></span>
-<span><span class="co">#&gt;   Coef. Estimate: 0.132</span></span>
-<span><span class="co">#&gt;   t-value: 2.33</span></span>
-<span><span class="co">#&gt;   p-value: 0.02</span></span>
-<span><span class="co">#&gt;   Conf. Interval: [0.025, 0.285]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Sensitivity Statistics:</span></span>
-<span><span class="co">#&gt;   Extreme Robustness Value: 0.000523</span></span>
-<span><span class="co">#&gt;   Robustness Value: 0.00667</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Bounds on Omitted Variable Bias:</span></span>
-<span><span class="co">#&gt;  Bound Label  R2zw.x R2y0w.zx Lower CI Upper CI Crit. Thr.</span></span>
-<span><span class="co">#&gt;     1x black 0.00221   0.0750  -0.0212    0.402       2.59</span></span>
-<span><span class="co">#&gt;      1x smsa 0.00639   0.0202  -0.0192    0.396       2.57</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Note: H0 = 0, q &gt;= 1, alpha = 0.05, df = 2994.</span></span>
-<span><span class="co">#&gt; =============================================================</span></span>
-<span><span class="co">#&gt; See summary for first stage and reduced form.</span></span>
-<span></span>
-<span><span class="co"># sensitivity contour plot</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">card.sens</span>, lim <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># loads package</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">library</span>(iv.sensemakr)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># loads dataset</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"card"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># prepares data</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> card<span class="sc">$</span>lwage  <span class="co"># outcome</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>d <span class="ot">&lt;-</span> card<span class="sc">$</span>educ   <span class="co"># treatment</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>z <span class="ot">&lt;-</span> card<span class="sc">$</span>nearc4 <span class="co"># instrument</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> exper <span class="sc">+</span> expersq <span class="sc">+</span> black <span class="sc">+</span> south <span class="sc">+</span> smsa <span class="sc">+</span> reg661 <span class="sc">+</span> reg662 <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                     reg663 <span class="sc">+</span> reg664 <span class="sc">+</span> reg665<span class="sc">+</span> reg666 <span class="sc">+</span> reg667 <span class="sc">+</span> reg668 <span class="sc">+</span> smsa66,</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>                   <span class="at">data =</span> card) <span class="co"># covariates</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co"># fits IV model</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>card.fit <span class="ot">&lt;-</span> <span class="fu">iv_fit</span>(y,d,z,x)</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co"># see results</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>card.fit</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; Instrumental Variable Estimation</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; (Anderson-Rubin Approach)</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; =============================================</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; IV Estimates:</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;   Coef. Estimate: 0.132</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt;   t-value: 2.33</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;   p-value: 0.02</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;   Conf. Interval: [0.025, 0.285]</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; Note: H0 = 0, alpha = 0.05, df = 2994.</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; =============================================</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; See summary for first stage and reduced form.</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co"># runs sensitivity analysis</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>card.sens <span class="ot">&lt;-</span> <span class="fu">sensemakr</span>(card.fit, <span class="at">benchmark_covariates =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"smsa"</span>))</span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co"># see results</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>card.sens</span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; Sensitivity Analysis for Instrumental Variables</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt; (Anderson-Rubin Approach)</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt; =============================================================</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; IV Estimates:</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt;   Coef. Estimate: 0.132</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt;   t-value: 2.33</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt;   p-value: 0.02</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt;   Conf. Interval: [0.025, 0.285]</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt; Sensitivity Statistics:</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt;   Extreme Robustness Value: 0.000523</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt;   Robustness Value: 0.00667</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt; Bounds on Omitted Variable Bias:</span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt;  Bound Label  R2zw.x R2y0w.zx Lower CI Upper CI Crit. Thr.</span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#&gt;     1x black 0.00221   0.0750  -0.0212    0.402       2.59</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="co">#&gt;      1x smsa 0.00639   0.0202  -0.0192    0.396       2.57</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="co">#&gt; Note: H0 = 0, q &gt;= 1, alpha = 0.05, df = 2994.</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="co">#&gt; =============================================================</span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="co">#&gt; See summary for first stage and reduced form.</span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="co"># sensitivity contour plot</span></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="fu">plot</span>(card.sens, <span class="at">lim =</span> <span class="fl">0.09</span>)</span></code></pre></div>
 <p><img src="reference/figures/README-basic-usage-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 
@@ -164,7 +160,14 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=iv.sensemakr" class="external-link"><img src="https://www.r-pkg.org/badges/version/iv.sensemakr" alt="CRAN status"></a></li>
+<li><a href="https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/carloscinelli/iv.sensemakr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/carloscinelli/iv.sensemakr" class="external-link"><img src="https://codecov.io/gh/carloscinelli/iv.sensemakr/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>

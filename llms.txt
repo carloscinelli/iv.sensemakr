@@ -12,7 +12,7 @@ Analysis of Instrumental Variables”, *Biometrika*
 To install the development version on GitHub make sure you have the
 package `devtools` installed.
 
-``` r
+``` R
 # install.packages("devtools") 
 devtools::install_github("carloscinelli/iv.sensemakr")
 ```
@@ -20,14 +20,14 @@ devtools::install_github("carloscinelli/iv.sensemakr")
 Please also make sure you have the latest version of `sensemakr`
 installed.
 
-``` r
+``` R
 # install.packages("devtools") 
 devtools::install_github("carloscinelli/sensemakr")
 ```
 
 # Basic usage
 
-``` r
+``` R
 # loads package
 library(iv.sensemakr)
 
