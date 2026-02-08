@@ -19,21 +19,22 @@ Analysis of Instrumental Variables”, *Biometrika*
 ([doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004);
 [PDF](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf)).
 
-## News
+# News
 
-- **Paper published in Biometrika!** Cinelli, C. and Hazlett, C. (2025),
-  “An Omitted Variable Bias Framework for Sensitivity Analysis of
+- Paper published in Biometrika: Cinelli, C. and Hazlett, C. (2025), “An
+  Omitted Variable Bias Framework for Sensitivity Analysis of
   Instrumental Variables.”
-  [doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004)
+  [doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004)You
+  can find a free version here
   ([PDF](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf))
-- **Package website:** <https://carloscinelli.com/iv.sensemakr/>
-- **Talks:**
-  - [Sensitivity Analysis for Instrumental Variables – Iowa State
-    University](https://www.youtube.com/watch?v=0b5VYWh8fN4)
-  - [An OVB Framework for Sensitivity Analysis of IV – EuroCIM
-    2021](https://www.youtube.com/watch?v=ykZqPB1FPNo)
+- Package website is now online
+  <https://carloscinelli.com/iv.sensemakr/>
+- Video of the [talk at
+  PCIC](https://www.youtube.com/watch?v=ykZqPB1FPNo)
+- Video of the [talk at
+  JSM](https://www.youtube.com/watch?v=0b5VYWh8fN4)
 
-## Development version
+# Development version
 
 To install the development version on GitHub make sure you have the
 package `devtools` installed.
