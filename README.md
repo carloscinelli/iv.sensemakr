@@ -22,18 +22,18 @@ Analysis of Instrumental Variables”, *Biometrika*
 # News
 
 - Package website [is now
-  online](https://carloscinelli.com/iv.sensemakr/)
+  online.](https://carloscinelli.com/iv.sensemakr/)
 
 - Paper published in
-  [Biometrika](https://doi.org/10.1093/biomet/asaf004) You can find a
+  [Biometrika.](https://doi.org/10.1093/biomet/asaf004) You can find a
   [free version
-  here](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf).
+  here.](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf).
 
 - Watch the [video of the talk at
-  PCIC](https://www.youtube.com/watch?v=ykZqPB1FPNo)
+  PCIC.](https://www.youtube.com/watch?v=ykZqPB1FPNo)
 
 - Watch the [video of the talk at
-  JSM](https://www.youtube.com/watch?v=0b5VYWh8fN4)
+  JSM.](https://www.youtube.com/watch?v=0b5VYWh8fN4)
 
 # Development version
 
