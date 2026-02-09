@@ -112,15 +112,15 @@ plot(card.sens, lim = 0.09)
 ``` r
 
 # latex code for sensitivity table
-ovb_minimal_reporting(card.sens)
+ovb_minimal_reporting(card.sens, outcome_label = "lwage", treatment_label = "educ")
 #> \begin{table}[!h]
 #> \centering
 #> \begin{tabular}{lrrrrrr}
-#> \multicolumn{7}{c}{Outcome: \textit{Y}} \\
+#> \multicolumn{7}{c}{Outcome: \textit{lwage}} \\
 #> \hline \hline 
 #> Treatment: & Est. & Lower CI & Upper CI & t-value & $XRV_{q = 1, \alpha = 0.05}$ & $RV_{q = 1, \alpha = 0.05}$  \\ 
 #> \hline 
-#> \textit{D} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
+#> \textit{educ} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
 #> \hline 
 #> df = 2994 & & \multicolumn{5}{r}{ \small \textit{Bound (1x black)}: $R^2_{Z\sim W| {\bf X}}$ = 0.2\%, $R^2_{Y(0)\sim W| Z, {\bf X}}$ = 7.5\%} \\
 #> \end{tabular}
@@ -129,11 +129,12 @@ ovb_minimal_reporting(card.sens)
 
 ``` r
 # html code for sensitivity table
-ovb_minimal_reporting(card.sens, format = "pure_html")
+ovb_minimal_reporting(card.sens, format = "pure_html",
+                      outcome_label = "lwage", treatment_label = "educ")
 ```
 
-|                                                                                  | Outcome: Y |          |          |         |                       |                      |
-|:---------------------------------------------------------------------------------|-----------:|---------:|---------:|--------:|----------------------:|---------------------:|
-| Treatment                                                                        |       Est. | Lower CI | Upper CI | t-value | XRV_(q = 1, α = 0.05) | RV_(q = 1, α = 0.05) |
-| *D*                                                                              |      0.132 |    0.025 |    0.285 |   2.327 |                  0.1% |                 0.7% |
-| Note: df = 2994; Bound ( 1x black ): R²_(Z~W\|X) = 0.2%, R²_(Y(0)~W\|Z,X) = 7.5% |            |          |          |         |                       |                      |
+|                                                                                  | Outcome: lwage |          |          |         |                       |                      |
+|:---------------------------------------------------------------------------------|---------------:|---------:|---------:|--------:|----------------------:|---------------------:|
+| Treatment                                                                        |           Est. | Lower CI | Upper CI | t-value | XRV_(q = 1, α = 0.05) | RV_(q = 1, α = 0.05) |
+| *educ*                                                                           |          0.132 |    0.025 |    0.285 |   2.327 |                  0.1% |                 0.7% |
+| Note: df = 2994; Bound ( 1x black ): R²_(Z~W\|X) = 0.2%, R²_(Y(0)~W\|Z,X) = 7.5% |                |          |          |         |                       |                      |
