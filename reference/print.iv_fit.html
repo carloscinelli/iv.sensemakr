@@ -53,7 +53,7 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>arguments passed to other methods</p></dd>
+<dd><p>arguments passed to other methods.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -64,7 +64,68 @@
 <dd><p>minimal number of significant digits</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p><code>print.iv_fit</code> returns the object <code>x</code> invisibly.
+<code>summary.iv_fit</code> returns an object of class <code>summary.iv_fit</code>.
+<code>print.summary.iv_fit</code> returns its argument invisibly.</p>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"card"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">lwage</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">educ</span></span></span>
+<span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">nearc4</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">south</span> <span class="op">+</span> <span class="va">smsa</span> <span class="op">+</span> <span class="va">reg661</span> <span class="op">+</span> <span class="va">reg662</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>                     <span class="va">reg663</span> <span class="op">+</span> <span class="va">reg664</span> <span class="op">+</span> <span class="va">reg665</span><span class="op">+</span> <span class="va">reg666</span> <span class="op">+</span> <span class="va">reg667</span> <span class="op">+</span> <span class="va">reg668</span> <span class="op">+</span> <span class="va">smsa66</span>,</span></span>
+<span class="r-in"><span>                   data <span class="op">=</span> <span class="va">card</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">card.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv_fit.html">iv_fit</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">d</span>, <span class="va">z</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Instrumental Variable Estimation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Anderson-Rubin Approach)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =============================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IV Estimates:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coef. Estimate: 0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t-value: 2.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value: 0.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conf. Interval: [0.025, 0.285]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: H0 = 0, alpha = 0.05, df = 2994.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =============================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See summary for first stage and reduced form.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Instrumental Variable Estimation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Anderson-Rubin Approach)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =============================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IV Estimates:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coef. Estimate: 0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t-value: 2.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value: 0.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conf. Interval: [0.025, 0.285]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: H0 = 0, alpha = 0.05, df = 2994.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FS Estimates:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coef. Estimate: 0.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Standard Error: 0.0879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t-value: 3.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value: 0.000276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conf. Interval: [0.148, 0.492]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: H0 = 0, alpha = 0.05, df = 2994.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RF Estimates:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coef. Estimate: 0.0421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Standard Error: 0.0181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t-value: 2.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value: 0.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Conf. Interval: [0.007, 0.078]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: H0 = 0, alpha = 0.05, df = 2994.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =============================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

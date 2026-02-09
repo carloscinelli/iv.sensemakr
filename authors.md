@@ -2,9 +2,11 @@
 
 ## Authors
 
-- **[Carlos Cinelli](https://carloscinelli.com)**. Author, maintainer.
+- **[Carlos Cinelli](https://carloscinelli.com)**. Author, maintainer,
+  copyright holder.
 
-- **[Chad Hazlett](https://www.chadhazlett.com)**. Author.
+- **[Chad Hazlett](https://www.chadhazlett.com)**. Author, copyright
+  holder.
 
 ## Citation
 

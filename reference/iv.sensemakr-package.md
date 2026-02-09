@@ -30,8 +30,9 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Carlos Cinelli <carloscinelli@hotmail.com>
+**Maintainer**: Carlos Cinelli <carloscinelli@hotmail.com> \[copyright
+holder\]
 
 Authors:
 
-- Chad Hazlett
+- Chad Hazlett \[copyright holder\]

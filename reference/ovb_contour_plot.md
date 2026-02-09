@@ -16,7 +16,7 @@ hypothetical values of the partial R2 of latent variables with the
 (or upper limit) of the Anderson-Rubin confidence interval of the IV
 estimate, or the t-value for testing a specific null hypothesis. The
 reference points are the bounds on the partial R2 of latent variables if
-they were k times “as strong” as the observed covariate used for
+they were k times "as strong" as the observed covariate used for
 benchmarking (see arguments kz and ky). The dotted red line show the
 chosen critical threshold (for instance, zero): latent variables with
 such strength (or stronger) are sufficient to invalidate the research
@@ -120,6 +120,12 @@ ovb_contour_plot(
 
   label of y axis. If \`NULL\`, default label is used.
 
+## Value
+
+The function is called for its side effect of producing a contour plot.
+It invisibly returns a `list` with the grid values used for the contour
+plot.
+
 ## Details
 
 Other parameters include:
@@ -206,3 +212,20 @@ Society, Series B (Statistical Methodology).
 Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework
 for Sensitivity Analysis of Instrumental Variables." Biometrika.
 [doi:10.1093/biomet/asaf004](https://doi.org/10.1093/biomet/asaf004)
+
+## Examples
+
+``` r
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+card.fit <- iv_fit(y, d, z, x)
+
+# contour plot of the lower CI limit
+ovb_contour_plot(card.fit, sensitivity.of = "lwr",
+                 benchmark_covariates = "black")
+```
