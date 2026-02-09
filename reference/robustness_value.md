@@ -20,10 +20,17 @@ xrv(...)
 rv(...)
 
 # S3 method for class 'iv_fit'
-extreme_robustness_value(model, parm = "iv", q = 1, alpha = 0.05, min = T, ...)
+extreme_robustness_value(
+  model,
+  parm = "iv",
+  q = 1,
+  alpha = 0.05,
+  min = TRUE,
+  ...
+)
 
 # S3 method for class 'iv_fit'
-robustness_value(model, parm = "iv", q = 1, alpha = 0.05, min = T, ...)
+robustness_value(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...)
 ```
 
 ## Arguments
