@@ -12,12 +12,29 @@
 \arguments{
 \item{object}{an object of class \code{\link{iv_fit}}.}
 
-\item{...}{arguments passed to other methods}
+\item{...}{arguments passed to other methods.}
 
 \item{x}{an object of class \code{\link{iv_fit}}.}
 
 \item{digits}{minimal number of significant digits}
 }
+\value{
+\code{print.iv_fit} returns the object \code{x} invisibly.
+\code{summary.iv_fit} returns an object of class \code{summary.iv_fit}.
+\code{print.summary.iv_fit} returns its argument invisibly.
+}
 \description{
 The print and summary methods provide verbal descriptions of the results obtained with the function \code{\link{iv_fit}}.
+}
+\examples{
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+card.fit <- iv_fit(y, d, z, x)
+print(card.fit)
+summary(card.fit)
 }

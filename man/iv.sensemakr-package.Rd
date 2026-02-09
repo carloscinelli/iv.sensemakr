@@ -30,11 +30,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Carlos Cinelli \email{carloscinelli@hotmail.com}
+\strong{Maintainer}: Carlos Cinelli \email{carloscinelli@hotmail.com} [copyright holder]
 
 Authors:
 \itemize{
-  \item Chad Hazlett
+  \item Chad Hazlett [copyright holder]
 }
 
 }

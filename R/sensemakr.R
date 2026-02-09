@@ -188,6 +188,21 @@ sensemakr.iv_fit <- function(model,
 ##' This function extracts the estimate, lower limit, upper limit, t-value, and (extreme) robustness values of an \code{iv.sensemakr} object, created with the function \code{\link{sensemakr}}.
 ##'
 ##' @inheritParams coef.iv_fit
+##'
+##' @returns A \code{\link{data.frame}} with the sensitivity statistics for the requested parameters.
+##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##' card.sens <- sensemakr(card.fit, benchmark_covariates = "black")
+##' coef(card.sens)
+##' coef(card.sens, parm = "fs")
 ##' @export
 coef.iv.sensemakr <- function(object, parm = "iv", ...){
 
@@ -242,6 +257,22 @@ print.iv.sensemakr <- function(x,digits = 3,...){
 #' @param object an object of class \code{\link{sensemakr}}.
 #' @param x an object of class \code{\link{sensemakr}}.
 #' @param digits minimal number of \emph{significant} digits.
+#'
+#' @returns \code{summary.iv.sensemakr} returns an object of class \code{summary.iv.sensemakr}.
+#' The \code{print} methods return the object invisibly.
+#'
+#' @examples
+#' data("card")
+#' y <- card$lwage
+#' d <- card$educ
+#' z <- card$nearc4
+#' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+#'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+#'                    data = card)
+#' card.fit <- iv_fit(y, d, z, x)
+#' card.sens <- sensemakr(card.fit, benchmark_covariates = "black")
+#' print(card.sens)
+#' summary(card.sens)
 #' @export
 #' @rdname print.iv.sensemakr
 summary.iv.sensemakr <- function(object, ...){

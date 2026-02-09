@@ -33,6 +33,28 @@ rv <- sensemakr::rv
 ##' @param min  in many cases, researchers are interested in biases as large or larger than a certain amount (for instance, the strength of confounding to bring a positive estimate to zero or below). Setting \code{min = TRUE} (default) computes the robustness value for such cases. Setting \code{min = FALSE} computes the robustness value for a bias of exactly \code{q}.
 ##' @param ... further arguments passed to or from other methods.
 ##'
+##' @returns A numeric value with the (extreme) robustness value.
+##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##'
+##' # robustness value of the IV estimate
+##' rv(card.fit)
+##'
+##' # extreme robustness value
+##' xrv(card.fit)
+##'
+##' # robustness values for first-stage and reduced-form
+##' rv(card.fit, parm = "fs")
+##' rv(card.fit, parm = "rf")
+##'
 ##' @references
 ##'
 ##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
@@ -141,7 +163,26 @@ rv_from_summary_stats <- function(fs.coef,
 ##' @description
 ##' Convenience function that computes robustness values for IV estimates as well as auxiliary first stage and reduced form regressions.
 ##'
+##' @returns A \code{\link{data.frame}} with columns for the estimate, confidence interval
+##' bounds (lower and upper), t-value, extreme robustness value (\code{xrv_qa}),
+##' robustness value (\code{rv_qa}), and the parameters used (\code{q}, \code{min},
+##' \code{alpha}, \code{dof}).
 ##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##'
+##' # sensitivity statistics for the IV estimate
+##' sensitivity_stats(card.fit)
+##'
+##' # sensitivity statistics for the first-stage
+##' sensitivity_stats(card.fit, parm = "fs")
 ##'
 ##' @export
 sensitivity_stats <- sensemakr::sensitivity_stats

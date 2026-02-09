@@ -25,6 +25,29 @@ sensitivity_stats(...)
 
 \item{min}{should we consider biases as large or larger than a certain amount? Default is \code{TRUE}.}
 }
+\value{
+A \code{\link{data.frame}} with columns for the estimate, confidence interval
+bounds (lower and upper), t-value, extreme robustness value (\code{xrv_qa}),
+robustness value (\code{rv_qa}), and the parameters used (\code{q}, \code{min},
+\code{alpha}, \code{dof}).
+}
 \description{
 Convenience function that computes robustness values for IV estimates as well as auxiliary first stage and reduced form regressions.
+}
+\examples{
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+card.fit <- iv_fit(y, d, z, x)
+
+# sensitivity statistics for the IV estimate
+sensitivity_stats(card.fit)
+
+# sensitivity statistics for the first-stage
+sensitivity_stats(card.fit, parm = "fs")
+
 }

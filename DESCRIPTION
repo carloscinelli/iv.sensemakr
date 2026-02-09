@@ -5,11 +5,11 @@ Version: 0.1.0
 Authors@R: c(
     person(given = "Carlos",
            family = "Cinelli",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "carloscinelli@hotmail.com"),
     person(given = "Chad",
            family = "Hazlett",
-           role = "aut")
+           role = c("aut", "cph"))
   )
 Description: Implements a suite of sensitivity analysis tools for instrumental
   variable estimates as described in Cinelli and Hazlett (2025)

@@ -57,7 +57,34 @@
 <dd><p>arguments passed to other methods.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code> with the sensitivity statistics for the requested parameters.</p>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"card"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">lwage</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">educ</span></span></span>
+<span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">nearc4</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">south</span> <span class="op">+</span> <span class="va">smsa</span> <span class="op">+</span> <span class="va">reg661</span> <span class="op">+</span> <span class="va">reg662</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>                     <span class="va">reg663</span> <span class="op">+</span> <span class="va">reg664</span> <span class="op">+</span> <span class="va">reg665</span><span class="op">+</span> <span class="va">reg666</span> <span class="op">+</span> <span class="va">reg667</span> <span class="op">+</span> <span class="va">reg668</span> <span class="op">+</span> <span class="va">smsa66</span>,</span></span>
+<span class="r-in"><span>                   data <span class="op">=</span> <span class="va">card</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">card.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv_fit.html">iv_fit</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">d</span>, <span class="va">z</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">card.sens</span> <span class="op">&lt;-</span> <span class="fu"><a href="sensemakr.html">sensemakr</a></span><span class="op">(</span><span class="va">card.fit</span>, benchmark_covariates <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.sens</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     estimate        lwr       upr  t.value       xrv_qa       rv_qa q min alpha</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv 0.1315038 0.02480484 0.2848236 2.327075 0.0005232443 0.006666407 1   1  0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dof</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv 2994</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.sens</span>, parm <span class="op">=</span> <span class="st">"fs"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     estimate       lwr       upr t.value      xrv_qa      rv_qa q min alpha</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fs 0.3198989 0.1476194 0.4921785 3.64085 0.003129076 0.03023129 1   1  0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dof</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fs 2994</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

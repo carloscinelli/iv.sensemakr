@@ -36,6 +36,21 @@ An object of class \code{iv_fit}, containing:
 
 The AR point estimate is numerically identical to the point estimate of two-stage least squares (2SLS) and it is given by the ratio of the reduced-form to the first-stage regression coefficient. Confidence intervals, however, are constructed differently. 2SLS is equivalent to using the delta-method to obtain the variance of the ratio estimator, and then proceeding by assuming the ratio is asymptotically normal. This approximation can fail when instruments are "weak." The Anderson-Rubin approach instead uses a test inversion procedure to construct confidence intervals. This procedure has correct coverage regardless of instrument strength, at the (inevitable) cost of eventually obtaining unbounded confidence intervals.
 }
+\examples{
+# prepare data
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+
+# fit iv model
+card.fit <- iv_fit(y, d, z, x)
+card.fit
+summary(card.fit)
+}
 \references{
 Anderson, T.W. and Rubin, H. (1949), Estimation of the parameters of a single equation in a complete system of stochastic equations, Annals of Mathematical Statistics, 20, 46-63.
 

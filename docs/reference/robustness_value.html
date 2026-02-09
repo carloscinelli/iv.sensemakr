@@ -103,10 +103,49 @@ methods on the corresponding <code><a href="https://rdrr.io/r/stats/lm.html" cla
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A numeric value with the (extreme) robustness value.</p>
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. <a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">doi:10.1093/biomet/asaf004</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"card"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">lwage</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">educ</span></span></span>
+<span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">nearc4</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">south</span> <span class="op">+</span> <span class="va">smsa</span> <span class="op">+</span> <span class="va">reg661</span> <span class="op">+</span> <span class="va">reg662</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>                     <span class="va">reg663</span> <span class="op">+</span> <span class="va">reg664</span> <span class="op">+</span> <span class="va">reg665</span><span class="op">+</span> <span class="va">reg666</span> <span class="op">+</span> <span class="va">reg667</span> <span class="op">+</span> <span class="va">reg668</span> <span class="op">+</span> <span class="va">smsa66</span>,</span></span>
+<span class="r-in"><span>                   data <span class="op">=</span> <span class="va">card</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">card.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv_fit.html">iv_fit</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">d</span>, <span class="va">z</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># robustness value of the IV estimate</span></span></span>
+<span class="r-in"><span><span class="fu">rv</span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      iv </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.00667 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: q &gt;= 1, alpha = 0.05 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># extreme robustness value</span></span></span>
+<span class="r-in"><span><span class="fu">xrv</span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       iv </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.000523 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: q &gt;= 1, alpha = 0.05 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># robustness values for first-stage and reduced-form</span></span></span>
+<span class="r-in"><span><span class="fu">rv</span><span class="op">(</span><span class="va">card.fit</span>, parm <span class="op">=</span> <span class="st">"fs"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0302 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: q = 1, alpha = 0.05, invert = FALSE </span>
+<span class="r-in"><span><span class="fu">rv</span><span class="op">(</span><span class="va">card.fit</span>, parm <span class="op">=</span> <span class="st">"rf"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      rf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.00667 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: q = 1, alpha = 0.05, invert = FALSE </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

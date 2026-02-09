@@ -18,7 +18,24 @@
 
 \item{digits}{minimal number of \emph{significant} digits.}
 }
+\value{
+\code{summary.iv.sensemakr} returns an object of class \code{summary.iv.sensemakr}.
+The \code{print} methods return the object invisibly.
+}
 \description{
 The \code{print} and \code{summary} methods provide verbal descriptions of the sensitivity analysis results
 obtained with the function \code{\link{sensemakr}}.
+}
+\examples{
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+card.fit <- iv_fit(y, d, z, x)
+card.sens <- sensemakr(card.fit, benchmark_covariates = "black")
+print(card.sens)
+summary(card.sens)
 }

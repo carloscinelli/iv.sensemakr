@@ -34,6 +34,20 @@
 ##' Fieller, E. C. (1954). Some problems in interval estimation. Journal of the Royal Statistical Society: Series B (Methodological), 16(2), 175-185.
 ##'
 ##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
+##' @examples
+##' # prepare data
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##'
+##' # fit iv model
+##' card.fit <- iv_fit(y, d, z, x)
+##' card.fit
+##' summary(card.fit)
 ##' @export
 iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
 
@@ -336,6 +350,23 @@ summary.iv_fit <- function(object,...){
 ##'
 ##' @param x an object of class \code{\link{iv_fit}}.
 ##' @param digits minimal number of significant digits
+##' @param ... arguments passed to other methods.
+##'
+##' @returns \code{print.iv_fit} returns the object \code{x} invisibly.
+##' \code{summary.iv_fit} returns an object of class \code{summary.iv_fit}.
+##' \code{print.summary.iv_fit} returns its argument invisibly.
+##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##' print(card.fit)
+##' summary(card.fit)
 ##' @export
 print.iv_fit <- function(x, digits = 3, ...){
   # skip first line

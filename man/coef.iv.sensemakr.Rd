@@ -13,6 +13,22 @@
 
 \item{...}{arguments passed to other methods.}
 }
+\value{
+A \code{\link{data.frame}} with the sensitivity statistics for the requested parameters.
+}
 \description{
 This function extracts the estimate, lower limit, upper limit, t-value, and (extreme) robustness values of an \code{iv.sensemakr} object, created with the function \code{\link{sensemakr}}.
+}
+\examples{
+data("card")
+y <- card$lwage
+d <- card$educ
+z <- card$nearc4
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+                     reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+                   data = card)
+card.fit <- iv_fit(y, d, z, x)
+card.sens <- sensemakr(card.fit, benchmark_covariates = "black")
+coef(card.sens)
+coef(card.sens, parm = "fs")
 }

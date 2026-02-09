@@ -7,6 +7,21 @@
 ##'
 ##' @param x an object of class \code{iv.sensemakr} created with the \code{\link{sensemakr}} function.
 ##' @inheritParams ovb_contour_plot
+##'
+##' @returns The function is called for its side effect of producing contour plots.
+##' It invisibly returns the output from \code{\link{ovb_contour_plot}}.
+##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##' card.sens <- sensemakr(card.fit, benchmark_covariates = "black")
+##' plot(card.sens, lim = 0.09)
 ##'@export
 plot.iv.sensemakr = function(x,
                              sensitivity.of = c("ci", "lwr", "upr", "t-value"),
@@ -110,11 +125,28 @@ plot.iv.sensemakr = function(x,
 ##'
 ##' The main inputs are an \code{\link{iv_fit}} model, and the covariates used for benchmarking the strength of omitted variables.
 ##'
-##' If \code{parm = "iv"} (default) contour plots of the IV estimate are shown. The horizontal axis of the plot shows hypothetical values of the partial R2 of latent variables with the instrument. The vertical axis shows hypothetical values of the partial R2 of latent variables with the (pot.) outcome. The contour levels represent the adjusted lower limit (or upper limit) of the Anderson-Rubin confidence interval of the IV estimate, or the t-value for testing a specific null hypothesis.  The reference points are the bounds on the partial R2 of latent variables if they were k times “as strong” as the observed covariate used for benchmarking (see arguments kz and ky). The dotted red line show the chosen critical threshold (for instance, zero): latent variables with such strength (or stronger) are sufficient to invalidate the research conclusions.
+##' If \code{parm = "iv"} (default) contour plots of the IV estimate are shown. The horizontal axis of the plot shows hypothetical values of the partial R2 of latent variables with the instrument. The vertical axis shows hypothetical values of the partial R2 of latent variables with the (pot.) outcome. The contour levels represent the adjusted lower limit (or upper limit) of the Anderson-Rubin confidence interval of the IV estimate, or the t-value for testing a specific null hypothesis.  The reference points are the bounds on the partial R2 of latent variables if they were k times "as strong" as the observed covariate used for benchmarking (see arguments kz and ky). The dotted red line show the chosen critical threshold (for instance, zero): latent variables with such strength (or stronger) are sufficient to invalidate the research conclusions.
 ##'
 ##' if \code{parm = "fs"} or \code{parm = "rf"}, then contour plots of the first-stage and reduced-form regression are shown. See, e.g, \code{\link[sensemakr]{ovb_contour_plot.lm}}.
 ##'
 ##' See Cinelli and Hazlett (2020, 2025) for details.
+##'
+##' @returns The function is called for its side effect of producing a contour plot.
+##' It invisibly returns a \code{list} with the grid values used for the contour plot.
+##'
+##' @examples
+##' data("card")
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##' card.fit <- iv_fit(y, d, z, x)
+##'
+##' # contour plot of the lower CI limit
+##' ovb_contour_plot(card.fit, sensitivity.of = "lwr",
+##'                  benchmark_covariates = "black")
 ##' @references
 ##'
 ##'  Cinelli, C. and Hazlett, C. (2020), "Making Sense of Sensitivity: Extending Omitted Variable Bias." Journal of the Royal Statistical Society, Series B (Statistical Methodology).
@@ -613,7 +645,7 @@ ovb4iv_partial_r2_bound <- function(model,
                                     ky = kz,
                                     alpha = 0.05,
                                     ci.limit = c("lwr", "upr"),
-                                    value = T
+                                    value = TRUE
                                     ){
 
   # check if lwr limit or upr limit of CI
