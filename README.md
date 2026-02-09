@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# iv.sensemakr: Sensitivity Analysis Tools for IV <img src="man/figures/iv-sensemakr-logo.png" align="right" />
+# iv.sensemakr: Sensitivity Analysis Tools for IV <img src="man/figures/iv-sensemakr-logo-small.png" align="right" />
 
 <!-- badges: start -->
 
