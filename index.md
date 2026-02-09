@@ -108,3 +108,32 @@ plot(card.sens, lim = 0.09)
 ```
 
 ![](reference/figures/README-basic-usage-1.png)
+
+``` r
+
+# latex code for sensitivity table
+ovb_minimal_reporting(card.sens)
+#> \begin{table}[!h]
+#> \centering
+#> \begin{tabular}{lrrrrrr}
+#> \multicolumn{7}{c}{Outcome: \textit{Y}} \\
+#> \hline \hline 
+#> Treatment: & Est. & Lower CI & Upper CI & t-value & $XRV_{q = 1, \alpha = 0.05}$ & $RV_{q = 1, \alpha = 0.05}$  \\ 
+#> \hline 
+#> \textit{D} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
+#> \hline 
+#> df = 2994 & & \multicolumn{5}{r}{ \small \textit{Bound (1x black)}: $R^2_{Z\sim W| {\bf X}}$ = 0.2\%, $R^2_{Y(0)\sim W| Z, {\bf X}}$ = 7.5\%} \\
+#> \end{tabular}
+#> \end{table}
+```
+
+``` r
+# html code for sensitivity table
+ovb_minimal_reporting(card.sens, format = "pure_html")
+```
+
+|                                                                                  | Outcome: Y |          |          |         |                       |                      |
+|:---------------------------------------------------------------------------------|-----------:|---------:|---------:|--------:|----------------------:|---------------------:|
+| Treatment                                                                        |       Est. | Lower CI | Upper CI | t-value | XRV_(q = 1, α = 0.05) | RV_(q = 1, α = 0.05) |
+| *D*                                                                              |      0.132 |    0.025 |    0.285 |   2.327 |                  0.1% |                 0.7% |
+| Note: df = 2994; Bound ( 1x black ): R²_(Z~W\|X) = 0.2%, R²_(Y(0)~W\|Z,X) = 7.5% |            |          |          |         |                       |                      |

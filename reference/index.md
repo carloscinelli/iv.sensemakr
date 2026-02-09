@@ -36,6 +36,9 @@ Perform sensitivity analysis of IV estimates.
   [`rv()`](https://carloscinelli.com/iv.sensemakr/reference/robustness_value.md)
   : Computes the (extreme) robustness value for IV
 
+- [`ovb_minimal_reporting()`](https://carloscinelli.com/iv.sensemakr/reference/ovb_minimal_reporting.md)
+  : Minimal sensitivity reporting for IV estimates
+
 - [`coef(`*`<iv.sensemakr>`*`)`](https://carloscinelli.com/iv.sensemakr/reference/coef.iv.sensemakr.md)
   :
 
