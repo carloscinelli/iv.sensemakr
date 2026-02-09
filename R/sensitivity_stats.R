@@ -43,13 +43,13 @@ extreme_robustness_value.iv_fit <- function(model,
                                             parm = "iv",
                                             q=1,
                                             alpha=0.05,
-                                            min = T, ...){
+                                            min = TRUE, ...){
 
   check_alpha(alpha)
   # sensemakr:::check_q(q)
   parm <- match.arg(parm,
                     choices = c("iv",  "fs", "rf"),
-                    several.ok = F)
+                    several.ok = FALSE)
   if(parm == "iv"){
     args <- iv_model_helper(fs = model$models$fs, rf = model$models$rf, instrument = "z")
     xrv <- do.call("rv_from_summary_stats", c(args, which = "xrv", q = q, alpha = alpha, min = min))
@@ -65,12 +65,12 @@ extreme_robustness_value.iv_fit <- function(model,
 
 ##' @exportS3Method sensemakr::robustness_value iv_fit
 ##' @rdname robustness_value
-robustness_value.iv_fit <- function(model, parm = "iv", q=1, alpha=0.05, min = T, ...){
+robustness_value.iv_fit <- function(model, parm = "iv", q=1, alpha=0.05, min = TRUE, ...){
   check_alpha(alpha)
   # sensemakr:::check_q(q)
   parm <- match.arg(parm,
                     choices = c("iv",  "fs", "rf"),
-                    several.ok = F)
+                    several.ok = FALSE)
   if(parm == "iv"){
     args <- iv_model_helper(fs = model$models$fs, rf = model$models$rf, instrument = "z")
     rv <- do.call("rv_from_summary_stats", c(args, which = "rv", q = q, alpha = alpha, min = min))
@@ -156,7 +156,7 @@ sensitivity_stats.iv_fit <- function(model, parm = "iv", q = 1, alpha = 0.05, mi
 
   parm <- match.arg(parm,
                     choices = c("iv", "fs","rf"),
-                    several.ok = F)
+                    several.ok = FALSE)
 
   check_alpha(alpha)
   # sensemakr:::check_q(q)
@@ -219,7 +219,7 @@ print.rv.iv <- function(x, digits = 3,...){
   if (!is.null(alpha)) cat(", alpha =", alpha,"\n")
 }
 
-printSenStats <- function(x, digits = 3, note = T){
+printSenStats <- function(x, digits = 3, note = TRUE){
   cat("\n")
   cat("Sensitivity Statistics:")
   cat("\n")

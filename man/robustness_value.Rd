@@ -17,9 +17,16 @@ xrv(...)
 
 rv(...)
 
-\method{extreme_robustness_value}{iv_fit}(model, parm = "iv", q = 1, alpha = 0.05, min = T, ...)
+\method{extreme_robustness_value}{iv_fit}(
+  model,
+  parm = "iv",
+  q = 1,
+  alpha = 0.05,
+  min = TRUE,
+  ...
+)
 
-\method{robustness_value}{iv_fit}(model, parm = "iv", q = 1, alpha = 0.05, min = T, ...)
+\method{robustness_value}{iv_fit}(model, parm = "iv", q = 1, alpha = 0.05, min = TRUE, ...)
 }
 \arguments{
 \item{...}{further arguments passed to or from other methods.}

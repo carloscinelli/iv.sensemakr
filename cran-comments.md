@@ -5,11 +5,10 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 4 notes
+0 errors | 0 warnings | 2 notes
 
 ## Notes
 
 - New submission.
+- Installed size is 6.6Mb due to bundled dataset (`card`, 3010 obs x 34 vars).
 - "unable to verify current time" reflects lack of internet access during local check.
-- Markdown top-level file checks require pandoc; not available in this local environment.
-- HTML validation issues are due to R's HTML generation, not package-specific problems.

@@ -11,7 +11,8 @@
 ^cran-comments\.md$
 ^\.codex$
 ^\.claude$
-^\.DS_Store$
+\.DS_Store$
+^Rplots\.pdf$
 ^tests/testthat/Rplots\.pdf$
 ^_pkgdown\.yml$
 ^docs$

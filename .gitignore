@@ -6,4 +6,5 @@
 .codex/
 README.html
 *.tar.gz
+Rplots.pdf
 tests/testthat/Rplots.pdf

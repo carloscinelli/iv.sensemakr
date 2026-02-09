@@ -192,7 +192,7 @@ sensemakr.iv_fit <- function(model,
 coef.iv.sensemakr <- function(object, parm = "iv", ...){
 
   parm <- match.arg(parm,
-                    several.ok = T,
+                    several.ok = TRUE,
                     choices = c("iv", "fs", "rf"))
 
   do.call("rbind", object$sensitivity_stats)[parm, ]
@@ -207,14 +207,14 @@ print.iv.sensemakr <- function(x,digits = 3,...){
   cat("(Anderson-Rubin Approach)")
   cat("\n")
   cat("=============================================================")
-  printEst(x$unadjusted$estimates$iv, digits = digits, note = F)
+  printEst(x$unadjusted$estimates$iv, digits = digits, note = FALSE)
   # cat("-------------------------------------------------------------")
-  printSenStats(x$sensitivity_stats$iv, digits = digits, note = F)
+  printSenStats(x$sensitivity_stats$iv, digits = digits, note = FALSE)
   # cat("-------------------------------------------------------------")
   if(!is.null(x$bounds$iv)){
     cat("Bounds on Omitted Variable Bias:")
     cat("\n")
-    print(setNames(x$bounds$iv, c("Bound Label", "R2zw.x", "R2y0w.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = F)
+    print(setNames(x$bounds$iv, c("Bound Label", "R2zw.x", "R2y0w.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = FALSE)
     cat("\n")
   }
   cat("Note:",
@@ -257,13 +257,13 @@ print.summary.iv.sensemakr <- function(x, digits = 3, ...){
   cat("(Anderson-Rubin Approach)")
   cat("\n")
   cat("=============================================================")
-  printEst(x$unadjusted$estimates$iv, digits = digits, note = F)
+  printEst(x$unadjusted$estimates$iv, digits = digits, note = FALSE)
   # cat("-------------------------------------------------------------")
-  printSenStats(x$sensitivity_stats$iv, digits = digits, note = F)
+  printSenStats(x$sensitivity_stats$iv, digits = digits, note = FALSE)
   if(!is.null(x$bounds$iv)){
     cat("Bounds on Omitted Variable Bias:")
     cat("\n")
-    print(setNames(x$bounds$iv, c("Bound Label", "R2zw.x", "r2y0w.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = F)
+    print(setNames(x$bounds$iv, c("Bound Label", "R2zw.x", "r2y0w.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = FALSE)
     cat("\n")
   }
   cat("Note:",
@@ -273,13 +273,13 @@ print.summary.iv.sensemakr <- function(x, digits = 3, ...){
       paste0("df = ", format(x$unadjusted$estimates$iv$dof,digits = digits), "."))
   cat("\n")
   cat("-------------------------------------------------------------")
-  printEst(x$unadjusted$estimates$fs, digits = digits, note = F)
+  printEst(x$unadjusted$estimates$fs, digits = digits, note = FALSE)
   # cat("-------------------------------------------------------------")
-  printSenStats(x$sensitivity_stats$fs, digits = digits, note = F)
+  printSenStats(x$sensitivity_stats$fs, digits = digits, note = FALSE)
   if(!is.null(x$bounds$fs)){
     cat("Bounds on Omitted Variable Bias:")
     cat("\n")
-    print(setNames(x$bounds$fs, c("Bound Label", "R2zw.x", "R2dw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = F)
+    print(setNames(x$bounds$fs, c("Bound Label", "R2zw.x", "R2dw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits, row.names = FALSE)
     cat("\n")
   }
   cat("Note:",
@@ -289,13 +289,13 @@ print.summary.iv.sensemakr <- function(x, digits = 3, ...){
       paste0("df = ", format(x$unadjusted$estimates$fs$dof,digits = digits), "."))
   cat("\n")
   cat("-------------------------------------------------------------")
-  printEst(x$unadjusted$estimates$rf, digits = digits, note = F)
+  printEst(x$unadjusted$estimates$rf, digits = digits, note = FALSE)
   # cat("-------------------------------------------------------------")
-  printSenStats(x$sensitivity_stats$rf, digits = digits, note = F)
+  printSenStats(x$sensitivity_stats$rf, digits = digits, note = FALSE)
   if(!is.null(x$bounds$rf)){
     cat("Bounds on Omitted Variable Bias:")
     cat("\n")
-    print(setNames(x$bounds$rf, c("Bound Label", "R2zw.x", "R2yw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits,row.names = F)
+    print(setNames(x$bounds$rf, c("Bound Label", "R2zw.x", "R2yw.zx", "Lower CI", "Upper CI", "Crit. Thr.")), digits = digits,row.names = FALSE)
     cat("\n")
   }
   cat("Note:",
@@ -620,7 +620,7 @@ iv_html_table_no_mathjax <- function(x, digits = 3, verbose = TRUE, ...) {
 ovb4iv_bounds <- function(model, kz, ky,
                           benchmarks,
                           alpha = 0.05){
-  out <- ovb4iv_partial_r2_bound(model, benchmark = benchmarks, kz = kz, ky= ky, alpha = alpha, value = F)
+  out <- ovb4iv_partial_r2_bound(model, benchmark = benchmarks, kz = kz, ky= ky, alpha = alpha, value = FALSE)
   out$lwr <- iv_adjusted_limit(fs = model$models$fs,
                                rf = model$models$rf,
                                instrument = "z",

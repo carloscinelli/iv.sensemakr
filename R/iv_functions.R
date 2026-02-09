@@ -46,7 +46,7 @@ iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
   d <- check_num(d, "d")
   z <- check_num(z, "z")
   if (!is.null(x)) {
-    x <- x[,apply(x, 2, var) != 0, drop = F]
+    x <- x[,apply(x, 2, var) != 0, drop = FALSE]
     x <- cbind("constant" = rep(1,nrow(x)), x)
   } else {
     x <- rep(1, length(y))
@@ -143,7 +143,7 @@ ar_confint <- function(fs.coef,  fs.se, rf.coef, rf.se, rho, dof, alpha = 0.05) 
   # critical t
   # ts <- qt(p = 1 - (alpha)/2, df = dof)
   ts <- sqrt(qf(p = log(alpha),
-                df1 = 1, df2 = dof, log.p = T, lower.tail = F))
+                df1 = 1, df2 = dof, log.p = TRUE, lower.tail = FALSE))
   # names <- paste0(c(1-))
 
   # quadratic coefficients
@@ -276,7 +276,7 @@ iv_model_helper <- function(fs, rf, instrument, ...){
 coef.iv_fit <- function(object, parm = "iv", ...) {
   parm <- match.arg(parm,
                     choices = c("iv",  "fs", "rf"),
-                    several.ok = T)
+                    several.ok = TRUE)
   # which <- which[which %in% names(object$estimates)]
   sapply(object$estimates[parm], function(x) x$estimate)
 }
@@ -293,7 +293,7 @@ coef.iv_fit <- function(object, parm = "iv", ...) {
 ##' @rdname coef.iv_fit
 ##' @export
 confint.iv_fit <- function(object, parm =c("iv", "fs", "rf"), level, ...){
-  parm <- match.arg(parm, several.ok = F)
+  parm <- match.arg(parm, several.ok = FALSE)
   alpha <- object$pars$alpha
   if (!missing(level)) {
     alpha <- 1 - level
@@ -400,7 +400,7 @@ if.print <- function(x, label, digits, fun = format){
 }
 
 
-printEst <- function(x, digits = 3, note = T){
+printEst <- function(x, digits = 3, note = TRUE){
   cat("\n")
   cat(paste0(x$name, ":"))
   cat("\n")

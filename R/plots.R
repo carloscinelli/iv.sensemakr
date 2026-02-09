@@ -173,7 +173,7 @@ ovb_contour_plot.iv_fit <- function(model,
   x <- model
   parm <- match.arg(parm,
                     choices = c("iv",  "fs", "rf"),
-                    several.ok = F)
+                    several.ok = FALSE)
   sensitivity.of <- match.arg(sensitivity.of)
 
   if (parm == "iv") {
@@ -546,7 +546,7 @@ iv_adjusted_limit.lm <- function(fs,
                                  r2y0w.zx,
                                  alpha = 0.05,
                                  ci.limit = c("lwr", "upr"),
-                                 max = T,
+                                 max = TRUE,
                                  ...){
   call.args   <- list(r2zw.x,
                       r2y0w.zx,
@@ -573,7 +573,7 @@ iv_adjusted_limit.numeric <- function(fs.coef,
                                       r2y0w.zx,
                                       alpha = 0.05,
                                       ci.limit = c("lwr", "upr"),
-                                      max = T,
+                                      max = TRUE,
                                       ...){
 
   ci.limit <- match.arg(ci.limit)
@@ -633,7 +633,7 @@ ovb4iv_partial_r2_bound <- function(model,
 
   # benchmark for d
   z  <- model$data$z
-  x  <- model$data[, !colnames(model$data) %in% c("y", "d", "z") , drop = F]
+  x  <- model$data[, !colnames(model$data) %in% c("y", "d", "z") , drop = FALSE]
   z.reg <- lm(formula(as.data.frame(cbind(z, x))), data = model$data)
   r2dxj.x  <- sensemakr::partial_r2(z.reg, covariates = benchmark)
 
@@ -686,12 +686,12 @@ label_maker <- function(benchmark_covariate, kd, ky, digits = 2) {
 
 # function residualizes  y, d, and xj
 get_partials <- function(model, benchmark){
-  x  <- model$data[,!(names(model$data) %in% c("y", "d", "z")), drop = F]
+  x  <- model$data[,!(names(model$data) %in% c("y", "d", "z")), drop = FALSE]
   y  <- model$data$y
   z  <- model$data$z
   d  <- model$data$d
   xj <- x[,benchmark, drop=F]
-  xx <- x[,!(colnames(x) %in% benchmark), drop = F]
+  xx <- x[,!(colnames(x) %in% benchmark), drop = FALSE]
 
   y.zx  <- resid(lm(formula(as.data.frame(cbind(y, z, xx))), data = model$data))
   d.zx  <- resid(lm(formula(as.data.frame(cbind(d, z, xx))), data = model$data))
@@ -712,7 +712,7 @@ maxR2 <- function(y.zx, d.zx, xj.zx) {
     ytau0.zx <- y.zx - tau0*d.zx
     cor(ytau0.zx, xj.zx)^2
   }
-  max.r2 <- optimize(cor.y0xj, interval = c(-1e5, 1e5), maximum = T)
+  max.r2 <- optimize(cor.y0xj, interval = c(-1e5, 1e5), maximum = TRUE)
   return(max.r2)
 }
 
