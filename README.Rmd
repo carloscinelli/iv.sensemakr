@@ -80,13 +80,4 @@ card.sens
 
 # sensitivity contour plot
 plot(card.sens, lim = 0.09)
-
-# latex code for sensitivity table
-ovb_minimal_reporting(card.sens, outcome_label = "lwage", treatment_label = "educ")
-```
-
-```{r results='asis'}
-# html code for sensitivity table
-ovb_minimal_reporting(card.sens, format = "pure_html",
-                      outcome_label = "lwage", treatment_label = "educ")
 ```

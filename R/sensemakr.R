@@ -94,12 +94,16 @@ sensemakr.iv_fit <- function(model,
                    r2y0w.zx = r2y0w.zx,
                    bound_label = bound_label)
 
+  # preserve original variable names from user's call
+  orig_names <- model$pars[c("y_name", "d_name", "z_name")]
+
   out$unadjusted <- iv_fit(y = model$data$y,
                                  d = model$data$d,
                                  z = model$data$z,
                                  x = as.matrix(model$data[,-c(1:3)]),
                                  h0 = (1-q)*model$estimates$iv$estimate,
                                  alpha = alpha)
+  out$unadjusted$pars[c("y_name", "d_name", "z_name")] <- orig_names
   model <- out$unadjusted
 
   out$sensitivity_stats$iv <- suppressWarnings(sensitivity_stats(model = model,
@@ -370,12 +374,19 @@ ovb_minimal_reporting <- function(x, digits = 3, verbose = TRUE, format = c("lat
 
 # internal table functions -------------------------------------------------
 
+# escape LaTeX special characters in label strings
+.escape_latex <- function(s) gsub("([\\$%&#_{}~^\\\\])", "\\\\\\1", s)
+
 iv_latex_table <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
   # labels: default to outcome/treatment names from internal models
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else x$unadjusted$pars$y_name
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else x$unadjusted$pars$d_name
+
+  # escape LaTeX special characters
+  outcome_label   <- .escape_latex(outcome_label)
+  treatment_label <- .escape_latex(treatment_label)
 
   q     <- x$pars$q
   alpha <- x$pars$alpha
@@ -449,8 +460,8 @@ iv_latex_table <- function(x, digits = 3, verbose = TRUE, ...) {
 iv_html_table <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else x$unadjusted$pars$y_name
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else x$unadjusted$pars$d_name
 
   q     <- x$pars$q
   alpha <- x$pars$alpha
@@ -529,8 +540,8 @@ iv_html_table <- function(x, digits = 3, verbose = TRUE, ...) {
 iv_html_table_no_mathjax <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else x$unadjusted$pars$y_name
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else x$unadjusted$pars$d_name
 
   q     <- x$pars$q
   alpha <- x$pars$alpha

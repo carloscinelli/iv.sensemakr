@@ -34,7 +34,6 @@ reference:
       - sensemakr
       - sensitivity_stats
       - robustness_value
-      - ovb_minimal_reporting
       - coef.iv.sensemakr
       - summary.iv.sensemakr
 

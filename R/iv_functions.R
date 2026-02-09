@@ -37,6 +37,11 @@
 ##' @export
 iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
 
+  # capture original variable names
+  y_name <- deparse(substitute(y))
+  d_name <- deparse(substitute(d))
+  z_name <- deparse(substitute(z))
+
   y <- check_num(y, "y")
   d <- check_num(d, "d")
   z <- check_num(z, "z")
@@ -125,7 +130,8 @@ iv_fit <- function(y, d, z, x = NULL, h0 = 0, alpha = 0.05){
                            ar = ar.estimates,
                            fs = fs.estimates,
                            rf = rf.estimates)
-  out$pars <- list(alpha = alpha, h0 = h0)
+  out$pars <- list(alpha = alpha, h0 = h0,
+                   y_name = y_name, d_name = d_name, z_name = z_name)
   class(out) <- "iv_fit"
   return(out)
 
