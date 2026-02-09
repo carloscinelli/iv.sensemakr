@@ -27,9 +27,6 @@ An object of class \code{iv_fit}, containing:
  \item{ \code{estimates} }{A \code{\link{list}} with the summary information of IV estimates, as well as summary information of the auxiliary estimates of the FS, RF, and AR regression. }
  \item{\code{pars}}{A \code{\link{list}} with the parameters of the call, such as the null hypothesis \code{h0} and the significance level \code{alpha}.}
  }
-
- @returns
- The function returns an object of class \code{iv_fit}.
 }
 \description{
 \code{iv_fit} computes instrumental variable estimates and confidence intervals using the Anderson-Rubin (AR) approach (Anderson and Rubin, 1949).  This approach is numerically identical to Fieller's theorem (Fieller, 1954). See Cinelli and Hazlett (2025) for further discussion.

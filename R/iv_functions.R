@@ -24,9 +24,6 @@
 ##'  \item{\code{pars}}{A \code{\link{list}} with the parameters of the call, such as the null hypothesis \code{h0} and the significance level \code{alpha}.}
 ##'  }
 ##'
-##'  @returns
-##'  The function returns an object of class \code{iv_fit}.
-##'
 ##' @references
 ##'
 ##' Anderson, T.W. and Rubin, H. (1949), Estimation of the parameters of a single equation in a complete system of stochastic equations, Annals of Mathematical Statistics, 20, 46-63.
