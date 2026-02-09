@@ -480,7 +480,7 @@ ovb4iv_contour_plot.numeric <- function(fs.coef,
 
   text(0.0 + label.bump.x,
        0.00 + label.bump.y,
-       paste0("Unadjusted\n(",
+       paste0("Observed\n(",
               signif(z_axis[1], 2),
               ")"),
 
