@@ -139,6 +139,87 @@
 <span><span class="co"># sensitivity contour plot</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">card.sens</span>, lim <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-basic-usage-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># latex code for sensitivity table</span></span>
+<span><span class="fu"><a href="reference/ovb_minimal_reporting.html">ovb_minimal_reporting</a></span><span class="op">(</span><span class="va">card.sens</span><span class="op">)</span></span>
+<span><span class="co">#&gt; \begin{table}[!h]</span></span>
+<span><span class="co">#&gt; \centering</span></span>
+<span><span class="co">#&gt; \begin{tabular}{lrrrrrr}</span></span>
+<span><span class="co">#&gt; \multicolumn{7}{c}{Outcome: \textit{Y}} \\</span></span>
+<span><span class="co">#&gt; \hline \hline </span></span>
+<span><span class="co">#&gt; Treatment: &amp; Est. &amp; Lower CI &amp; Upper CI &amp; t-value &amp; $XRV_{q = 1, \alpha = 0.05}$ &amp; $RV_{q = 1, \alpha = 0.05}$  \\ </span></span>
+<span><span class="co">#&gt; \hline </span></span>
+<span><span class="co">#&gt; \textit{D} &amp; 0.132 &amp; 0.025 &amp; 0.285 &amp; 2.327 &amp; 0.1\% &amp; 0.7\% \\ </span></span>
+<span><span class="co">#&gt; \hline </span></span>
+<span><span class="co">#&gt; df = 2994 &amp; &amp; \multicolumn{5}{r}{ \small \textit{Bound (1x black)}: $R^2_{Z\sim W| {\bf X}}$ = 0.2\%, $R^2_{Y(0)\sim W| Z, {\bf X}}$ = 7.5\%} \\</span></span>
+<span><span class="co">#&gt; \end{tabular}</span></span>
+<span><span class="co">#&gt; \end{table}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># html code for sensitivity table</span></span>
+<span><span class="fu"><a href="reference/ovb_minimal_reporting.html">ovb_minimal_reporting</a></span><span class="op">(</span><span class="va">card.sens</span>, format <span class="op">=</span> <span class="st">"pure_html"</span><span class="op">)</span></span></code></pre></div>
+<table style="align:center" class="table">
+<thead>
+<tr>
+<th style="text-align:left;border-bottom: 1px solid transparent;border-top: 1px solid black">
+</th>
+<th colspan="6" style="text-align:center;border-bottom: 1px solid black;border-top: 1px solid black">
+Outcome: Y
+</th>
+</tr>
+<tr>
+<th style="text-align:left;border-top: 1px solid black">
+Treatment
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+Est.
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+Lower CI
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+Upper CI
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+t-value
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+XRV<sub>q = 1, α = 0.05</sub>
+</th>
+<th style="text-align:right;border-top: 1px solid black">
+RV<sub>q = 1, α = 0.05</sub>
+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="text-align:left; border-bottom: 1px solid black">
+<i>D</i>
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+0.132
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+0.025
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+0.285
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+2.327
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+0.1%
+</td>
+<td style="text-align:right;border-bottom: 1px solid black">
+0.7%
+</td>
+</tr></tbody>
+<tr>
+<td colspan="7" style="text-align:right;border-bottom: 1px solid transparent;font-size:11px">
+Note: df = 2994; Bound ( 1x black ): R<sup>2</sup><sub>Z~W|X</sub> = 0.2%, R<sup>2</sup><sub>Y(0)~W|Z,X</sub> = 7.5%
+</td>
+</tr>
+</table>
 </div>
 
   </main><aside class="col-md-3"><div class="links">

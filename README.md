@@ -120,3 +120,139 @@ plot(card.sens, lim = 0.09)
 ```
 
 <img src="man/figures/README-basic-usage-1.png" width="100%" style="display: block; margin: auto;" />
+
+``` r
+
+# latex code for sensitivity table
+ovb_minimal_reporting(card.sens)
+#> \begin{table}[!h]
+#> \centering
+#> \begin{tabular}{lrrrrrr}
+#> \multicolumn{7}{c}{Outcome: \textit{Y}} \\
+#> \hline \hline 
+#> Treatment: & Est. & Lower CI & Upper CI & t-value & $XRV_{q = 1, \alpha = 0.05}$ & $RV_{q = 1, \alpha = 0.05}$  \\ 
+#> \hline 
+#> \textit{D} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
+#> \hline 
+#> df = 2994 & & \multicolumn{5}{r}{ \small \textit{Bound (1x black)}: $R^2_{Z\sim W| {\bf X}}$ = 0.2\%, $R^2_{Y(0)\sim W| Z, {\bf X}}$ = 7.5\%} \\
+#> \end{tabular}
+#> \end{table}
+```
+
+``` r
+# html code for sensitivity table
+ovb_minimal_reporting(card.sens, format = "pure_html")
+```
+
+<table style="align:center">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;border-bottom: 1px solid transparent;border-top: 1px solid black">
+
+</th>
+
+<th colspan="6" style="text-align:center;border-bottom: 1px solid black;border-top: 1px solid black">
+
+Outcome: Y
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:left;border-top: 1px solid black">
+
+Treatment
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+Est.
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+Lower CI
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+Upper CI
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+t-value
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+XRV<sub>q = 1, α = 0.05</sub>
+</th>
+
+<th style="text-align:right;border-top: 1px solid black">
+
+RV<sub>q = 1, α = 0.05</sub>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left; border-bottom: 1px solid black">
+
+<i>D</i>
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+0.132
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+0.025
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+0.285
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+2.327
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+0.1%
+</td>
+
+<td style="text-align:right;border-bottom: 1px solid black">
+
+0.7%
+</td>
+
+</tr>
+
+</tbody>
+
+<tr>
+
+<td colspan="7" style="text-align:right;border-bottom: 1px solid transparent;font-size:11px">
+
+Note: df = 2994; Bound ( 1x black ): R<sup>2</sup><sub>Z~W\|X</sub> =
+0.2%, R<sup>2</sup><sub>Y(0)~W\|Z,X</sub> = 7.5%
+</td>
+
+</tr>
+
+</table>

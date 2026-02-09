@@ -305,6 +305,306 @@ print.summary.iv.sensemakr <- function(x, digits = 3, ...){
   cat("\n")
 }
 
+# ovb_minimal_reporting -------------------------------------------------------
+
+##' Minimal sensitivity reporting for IV estimates
+##'
+##' @description
+##' This function produces LaTeX or HTML code for a minimal sensitivity analysis table
+##' for instrumental variable estimates, as suggested in Cinelli and Hazlett (2025).
+##' For objects of class \code{\link{sensemakr}} (from the \pkg{sensemakr} package), it
+##' dispatches to \code{sensemakr::\link[sensemakr]{ovb_minimal_reporting}}.
+##'
+##' @param x an object of class \code{iv.sensemakr} or \code{sensemakr}.
+##' @param digits minimal number of \emph{significant} digits.
+##' @param verbose if \code{TRUE}, the function prints the code with \code{\link{cat}}.
+##' @param format code format to print: \code{"latex"}, \code{"html"} (requires mathjax), or \code{"pure_html"}.
+##' @param ... further arguments passed to the table-building functions.
+##'   Optional overrides include \code{outcome_label} and \code{treatment_label}.
+##'
+##' @return The function returns the LaTeX or HTML code invisibly as a character string and also prints it
+##' with \code{\link{cat}} when \code{verbose = TRUE}.
+##'
+##' @references
+##' Cinelli, C. and Hazlett, C. (2025), "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables." Biometrika. \doi{10.1093/biomet/asaf004}
+##'
+##' @examples
+##' # loads package
+##' library(iv.sensemakr)
+##'
+##' # loads dataset
+##' data("card")
+##'
+##' # prepares data
+##' y <- card$lwage
+##' d <- card$educ
+##' z <- card$nearc4
+##' x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 +
+##'                      reg663 + reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+##'                    data = card)
+##'
+##' # fits IV model and runs sensitivity analysis
+##' card.fit <- iv_fit(y, d, z, x)
+##' card.sens <- sensemakr(card.fit, benchmark_covariates = c("black", "smsa"))
+##'
+##' # latex code
+##' ovb_minimal_reporting(card.sens)
+##'
+##' # html code (pure html, no mathjax needed)
+##' ovb_minimal_reporting(card.sens, format = "pure_html")
+##'
+##' @export
+ovb_minimal_reporting <- function(x, digits = 3, verbose = TRUE, format = c("latex", "html", "pure_html"), ...) {
+  if (inherits(x, "iv.sensemakr")) {
+    format <- match.arg(format)
+    fun <- switch(format,
+                  latex     = iv_latex_table,
+                  html      = iv_html_table,
+                  pure_html = iv_html_table_no_mathjax)
+    fun(x = x, digits = digits, verbose = verbose, ...)
+  } else {
+    sensemakr::ovb_minimal_reporting(x = x, digits = digits, verbose = verbose, format = format, ...)
+  }
+}
+
+
+# internal table functions -------------------------------------------------
+
+iv_latex_table <- function(x, digits = 3, verbose = TRUE, ...) {
+  table_settings <- list(...)
+
+  # labels
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+
+  q     <- x$pars$q
+  alpha <- x$pars$alpha
+
+  # extract stats
+  ss  <- x$sensitivity_stats$iv
+  est <- x$unadjusted$estimates$iv
+
+  table_begin <- paste0(
+    "\\begin{table}[!h]\n",
+    "\\centering\n",
+    "\\begin{tabular}{lrrrrrr}\n")
+
+  outcome_header <- sprintf(
+    "\\multicolumn{7}{c}{Outcome: \\textit{%s}} \\\\\n",
+    outcome_label)
+
+  coeff_header <- paste0(
+    "\\hline \\hline \n",
+    "Treatment: & Est. & Lower CI & Upper CI & t-value ",
+    "& $XRV_{q = ", q, ", \\alpha = ", alpha, "}$ ",
+    "& $RV_{q = ", q, ", \\alpha = ", alpha, "}$ ",
+    " \\\\ \n",
+    "\\hline \n")
+
+  coeff_results <- paste0(
+    "\\textit{", treatment_label, "} & ",
+    round(ss$estimate, digits), " & ",
+    round(ss$lwr, digits), " & ",
+    round(ss$upr, digits), " & ",
+    round(ss$t.value, digits), " & ",
+    100 * round(ss$xrv_qa, digits), "\\% & ",
+    100 * round(ss$rv_qa, digits), "\\% \\\\ \n")
+
+  # footnote
+  dof <- est$dof
+  if (!is.null(x$bounds$iv)) {
+    row <- x$bounds$iv[1, , drop = FALSE]
+    footnote <- paste0(
+      "\\hline \n",
+      "df = ", dof, " & & ",
+      "\\multicolumn{5}{r}{ ",
+      "\\small ",
+      "\\textit{Bound (", row$bound_label, ")}: ",
+      "$R^2_{Z\\sim W| {\\bf X}}$ = ",
+      100 * round(row$r2zw.x, digits), "\\%, ",
+      "$R^2_{Y(0)\\sim W| Z, {\\bf X}}$ = ",
+      100 * round(row$r2y0w.zx, digits), "\\%",
+      "} \\\\\n")
+  } else {
+    footnote <- paste0(
+      "\\hline \n",
+      "df = ", dof, " & & ",
+      "\\multicolumn{5}{r}{ }")
+  }
+
+  tabular_end <- "\\end{tabular}\n"
+  caption <- if (!is.null(table_settings[["caption"]])) paste0("\\caption{", table_settings[["caption"]], "} \n") else ""
+  label   <- if (!is.null(table_settings[["label"]]))   paste0("\\label{",   table_settings[["label"]],   "} \n") else ""
+  table_end <- "\\end{table}"
+
+  table <- paste0(table_begin, outcome_header, coeff_header,
+                  coeff_results, footnote, tabular_end,
+                  caption, label, table_end)
+
+  if (verbose) cat(table)
+  return(invisible(table))
+}
+
+
+iv_html_table <- function(x, digits = 3, verbose = TRUE, ...) {
+  table_settings <- list(...)
+
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+
+  q     <- x$pars$q
+  alpha <- x$pars$alpha
+
+  ss  <- x$sensitivity_stats$iv
+  est <- x$unadjusted$estimates$iv
+
+  table_begin <- "<table>\n"
+
+  coeff_header <- paste0(
+    "<thead>\n",
+    "<tr>\n",
+    '\t<th style="text-align:left;border-bottom: 1px solid transparent;border-top: 1px solid black"> </th>\n',
+    '\t<th colspan = 6 style="text-align:center;border-bottom: 1px solid black;border-top: 1px solid black"> Outcome: ',
+    outcome_label, '</th>\n',
+    "</tr>\n",
+    "<tr>\n",
+    '\t<th style="text-align:left;border-top: 1px solid black"> Treatment </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Est. </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Lower CI </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Upper CI </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> t-value </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> $XRV_{q = ', q, ', \\alpha = ', alpha, '}$ </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> $RV_{q = ', q, ', \\alpha = ', alpha, '}$ </th>\n',
+    "</tr>\n",
+    "</thead>\n")
+
+  coeff_results <- paste0(
+    "<tbody>\n <tr>\n",
+    '\t<td style="text-align:left; border-bottom: 1px solid black"><i>',
+    treatment_label, "</i></td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$estimate, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$lwr, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$upr, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$t.value, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    100 * round(ss$xrv_qa, digits), "\\% </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    100 * round(ss$rv_qa, digits), "\\% </td>\n",
+    "</tr>\n</tbody>\n")
+
+  table_end <- "</table>"
+
+  dof <- est$dof
+  if (!is.null(x$bounds$iv)) {
+    row <- x$bounds$iv[1, , drop = FALSE]
+    footnote <- paste0(
+      '<tr>\n',
+      "<td colspan = 7 style='text-align:right;border-top: 1px solid black;border-bottom: 1px solid transparent;font-size:11px'>",
+      "Note: df = ", dof, "; ",
+      "Bound ( ", row$bound_label, " ):  ",
+      "$R^2_{Z\\sim W| {\\bf X}}$ = ",
+      100 * round(row$r2zw.x, digits), "\\%, ",
+      "$R^2_{Y(0)\\sim W| Z, {\\bf X}}$ = ",
+      100 * round(row$r2y0w.zx, digits), "\\%",
+      "</td>\n</tr>\n")
+  } else {
+    footnote <- paste0(
+      '<tr>\n',
+      "<td colspan = 7 style='text-align:right;border-top: 1px solid black;border-bottom: 1px solid transparent;font-size:11px'>",
+      "Note: df = ", dof, "; ",
+      "</td>\n</tr>\n")
+  }
+
+  table <- paste0(table_begin, coeff_header, coeff_results, footnote, table_end)
+
+  if (verbose) cat(table)
+  return(invisible(table))
+}
+
+
+iv_html_table_no_mathjax <- function(x, digits = 3, verbose = TRUE, ...) {
+  table_settings <- list(...)
+
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+
+  q     <- x$pars$q
+  alpha <- x$pars$alpha
+
+  ss  <- x$sensitivity_stats$iv
+  est <- x$unadjusted$estimates$iv
+
+  table_begin <- "<table style='align:center'>\n"
+
+  coeff_header <- paste0(
+    "<thead>\n",
+    "<tr>\n",
+    '\t<th style="text-align:left;border-bottom: 1px solid transparent;border-top: 1px solid black"> </th>\n',
+    '\t<th colspan = 6 style="text-align:center;border-bottom: 1px solid black;border-top: 1px solid black"> Outcome: ',
+    outcome_label, '</th>\n',
+    "</tr>\n",
+    "<tr>\n",
+    '\t<th style="text-align:left;border-top: 1px solid black"> Treatment </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Est. </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Lower CI </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> Upper CI </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> t-value </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> XRV<sub>q = ', q, ', &alpha; = ', alpha, '</sub> </th>\n',
+    '\t<th style="text-align:right;border-top: 1px solid black"> RV<sub>q = ', q, ', &alpha; = ', alpha, '</sub> </th>\n',
+    "</tr>\n",
+    "</thead>\n")
+
+  coeff_results <- paste0(
+    "<tbody>\n <tr>\n",
+    '\t<td style="text-align:left; border-bottom: 1px solid black"><i>',
+    treatment_label, "</i></td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$estimate, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$lwr, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$upr, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    round(ss$t.value, digits), " </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    100 * round(ss$xrv_qa, digits), "% </td>\n",
+    '\t<td style="text-align:right;border-bottom: 1px solid black">',
+    100 * round(ss$rv_qa, digits), "% </td>\n",
+    "</tr>\n</tbody>\n")
+
+  table_end <- "</table>"
+
+  dof <- est$dof
+  if (!is.null(x$bounds$iv)) {
+    row <- x$bounds$iv[1, , drop = FALSE]
+    footnote <- paste0(
+      '<tr>\n',
+      "<td colspan = 7 style='text-align:right;border-bottom: 1px solid transparent;font-size:11px'>",
+      "Note: df = ", dof, "; ",
+      "Bound ( ", row$bound_label, " ):  ",
+      "R<sup>2</sup><sub>Z~W|X</sub> = ",
+      100 * round(row$r2zw.x, digits),
+      "%, R<sup>2</sup><sub>Y(0)~W|Z,X</sub> = ",
+      100 * round(row$r2y0w.zx, digits), "%",
+      "</td>\n</tr>\n")
+  } else {
+    footnote <- paste0(
+      '<tr>\n',
+      "<td colspan = 7 style='text-align:right;border-bottom: 1px solid transparent;font-size:11px'>",
+      "Note: df = ", dof, "; ",
+      "</td>\n</tr>\n")
+  }
+
+  table <- paste0(table_begin, coeff_header, coeff_results, footnote, table_end)
+
+  if (verbose) cat(table)
+  return(invisible(table))
+}
+
 
 ovb4iv_bounds <- function(model, kz, ky,
                           benchmarks,
