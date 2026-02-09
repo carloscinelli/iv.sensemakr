@@ -124,15 +124,15 @@ plot(card.sens, lim = 0.09)
 ``` r
 
 # latex code for sensitivity table
-ovb_minimal_reporting(card.sens)
+ovb_minimal_reporting(card.sens, outcome_label = "lwage", treatment_label = "educ")
 #> \begin{table}[!h]
 #> \centering
 #> \begin{tabular}{lrrrrrr}
-#> \multicolumn{7}{c}{Outcome: \textit{Y}} \\
+#> \multicolumn{7}{c}{Outcome: \textit{lwage}} \\
 #> \hline \hline 
 #> Treatment: & Est. & Lower CI & Upper CI & t-value & $XRV_{q = 1, \alpha = 0.05}$ & $RV_{q = 1, \alpha = 0.05}$  \\ 
 #> \hline 
-#> \textit{D} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
+#> \textit{educ} & 0.132 & 0.025 & 0.285 & 2.327 & 0.1\% & 0.7\% \\ 
 #> \hline 
 #> df = 2994 & & \multicolumn{5}{r}{ \small \textit{Bound (1x black)}: $R^2_{Z\sim W| {\bf X}}$ = 0.2\%, $R^2_{Y(0)\sim W| Z, {\bf X}}$ = 7.5\%} \\
 #> \end{tabular}
@@ -141,7 +141,8 @@ ovb_minimal_reporting(card.sens)
 
 ``` r
 # html code for sensitivity table
-ovb_minimal_reporting(card.sens, format = "pure_html")
+ovb_minimal_reporting(card.sens, format = "pure_html",
+                      outcome_label = "lwage", treatment_label = "educ")
 ```
 
 <table style="align:center">
@@ -156,7 +157,7 @@ ovb_minimal_reporting(card.sens, format = "pure_html")
 
 <th colspan="6" style="text-align:center;border-bottom: 1px solid black;border-top: 1px solid black">
 
-Outcome: Y
+Outcome: lwage
 </th>
 
 </tr>
@@ -208,7 +209,7 @@ RV<sub>q = 1, α = 0.05</sub>
 
 <td style="text-align:left; border-bottom: 1px solid black">
 
-<i>D</i>
+<i>educ</i>
 </td>
 
 <td style="text-align:right;border-bottom: 1px solid black">

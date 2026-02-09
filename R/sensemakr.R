@@ -373,9 +373,9 @@ ovb_minimal_reporting <- function(x, digits = 3, verbose = TRUE, format = c("lat
 iv_latex_table <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
-  # labels
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+  # labels: default to outcome/treatment names from internal models
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
 
   q     <- x$pars$q
   alpha <- x$pars$alpha
@@ -449,8 +449,8 @@ iv_latex_table <- function(x, digits = 3, verbose = TRUE, ...) {
 iv_html_table <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
 
   q     <- x$pars$q
   alpha <- x$pars$alpha
@@ -529,8 +529,8 @@ iv_html_table <- function(x, digits = 3, verbose = TRUE, ...) {
 iv_html_table_no_mathjax <- function(x, digits = 3, verbose = TRUE, ...) {
   table_settings <- list(...)
 
-  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else "Y"
-  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else "D"
+  outcome_label   <- if (!is.null(table_settings[["outcome_label"]])) table_settings[["outcome_label"]] else all.vars(formula(x$unadjusted$models$rf))[1]
+  treatment_label <- if (!is.null(table_settings[["treatment_label"]])) table_settings[["treatment_label"]] else all.vars(formula(x$unadjusted$models$fs))[1]
 
   q     <- x$pars$q
   alpha <- x$pars$alpha
