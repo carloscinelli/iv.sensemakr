@@ -1,4 +1,4 @@
-# iv.sensemakr: Sensitivity Analysis Tools for IV
+# iv.sensemakr: Sensitivity Analysis Tools for IV ![](reference/figures/iv-sensemakr-logo.png)
 
 `iv.sensemakr` implements a suite of sensitivity analysis tools for
 instrumental variable estimates, as discussed in Cinelli, C. and
