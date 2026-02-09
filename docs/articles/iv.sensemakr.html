@@ -64,13 +64,13 @@ and Chad Hazlett</h4>
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>Instrumental variable (IV) methods are widely used in economics,
-epidemiology, and the social sciences to estimate causal effects when
-treatment assignment is confounded. A valid IV approach requires that,
-conditionally on observed covariates, the instrument is not confounded
-with the outcome, and that it influences the outcome only by affecting
-uptake of the treatment. The first assumption is usually called
-“exogeneity,” “ignorability,” or “unconfoundedness” of the instrument,
-whereas the second assumption is usually called the “exclusion
+epidemiology, and the social sciences to estimate causal effects in the
+presence of unobserved confounding. A valid IV approach requires that,
+conditionally on observed covariates, the instrument is not itself
+confounded with the outcome, and that it influences the outcome only by
+affecting uptake of the treatment. The first assumption is usually
+called “exogeneity,” “ignorability,” or “unconfoundedness” of the
+instrument, whereas the second is usually called the “exclusion
 restriction.”</p>
 <p>However, these assumptions are often violated in practice due to the
 presence of omitted confounders of the instrument; or, even when the
@@ -78,70 +78,34 @@ instrument is randomized, by omitted side-effects of the instrument
 influencing the outcome via paths other than through the treatment. If
 these assumptions fail, the bias of the IV estimate may in fact be worse
 than the original confounding bias of the naive regression estimate.
-Therefore, researchers are often advised to perform sensitivity analyses
-to assess the degree of violation required to alter the conclusions of a
-study.</p>
+Researchers are therefore often advised to perform sensitivity analyses
+to assess the degree of violation of the IV assumptions required to
+alter the conclusions of an IV study.</p>
 <p>The package <code>iv.sensemakr</code> aims to help with this task,
 implementing a suite of sensitivity analysis tools for IV estimates as
-developed in <a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">Cinelli
-and Hazlett (2025)</a>, which builds on the omitted variable bias (OVB)
-framework of <a href="https://doi.org/10.1111/rssb.12348" class="external-link">Cinelli and
-Hazlett (2020)</a>. The goal of <code>iv.sensemakr</code> is to make it
-easier to understand how violations of unconfoundedness or the exclusion
+developed in Cinelli and Hazlett (2025), which builds on the omitted
+variable bias (OVB) framework of Cinelli and Hazlett (2020). The goal of
+<code>iv.sensemakr</code> is to make it easier to understand how
+violations of unconfoundedness of the instrument or the exclusion
 restriction would affect the original findings of a study.</p>
 </div>
 <div class="section level2">
 <h2 id="estimating-the-returns-to-schooling">Estimating the returns to schooling<a class="anchor" aria-label="anchor" href="#estimating-the-returns-to-schooling"></a>
 </h2>
-<p>Given that sensitivity analysis requires contextual knowledge to be
+<p>Since sensitivity analysis requires contextual knowledge to be
 properly interpreted, we illustrate the basic functionality of the
 package with a real example. Here we reproduce the results found in
-Section 5 of Cinelli and Hazlett (2025). In a now famous paper, Card
-(1993) used proximity to college as an instrumental variable to estimate
-the casual effect of education on earnings. Here we revisit that study,
-and quantify how robust the initial findings are to violations of
-unconfoundedness or the exclusion restriction.</p>
+Section 5 of Cinelli and Hazlett (2025). Card (1993) used proximity to
+college as an instrumental variable to estimate the causal effect of
+education on earnings. We revisit that study and quantify how robust the
+initial findings are to violations of the IV assumptions.</p>
 <div class="section level3">
-<h3 id="ols-findings-and-the-ovb-problem">OLS findings and the OVB problem<a class="anchor" aria-label="anchor" href="#ols-findings-and-the-ovb-problem"></a>
+<h3 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h3>
-<p>Many observational studies have established a positive association
-between educational achievement and earnings using regression analysis.
-Here we consider the work of Card (1993) who employed a sample of
+<p>The <code>card</code> dataset is included in the package, and
+consists of a sample of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn><mo>,</mo><mn>010</mn></mrow><annotation encoding="application/x-tex">n = 3{,}010</annotation></semantics></math>
-individuals from the National Longitudinal Survey of Young Men. In a
-regression of log wages
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>)
-on years of education
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>),
-adjusting for race, experience, and regional factors
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>),
-Card found that each additional year of schooling was associated with
-approximately 7.5% higher wages. However, educational achievement is not
-randomly assigned. Individuals who obtain more education may have higher
-wages for other reasons, such as family background, or higher levels of
-some unobserved characteristic such as <em>Ability</em> or
-<em>Motivation</em>. Regression estimates that adjust for only a partial
-list of characteristics may thus suffer from omitted variable bias,
-likely overestimating the true returns to schooling.</p>
-</div>
-<div class="section level3">
-<h3 id="original-iv-estimates">Original IV estimates<a class="anchor" aria-label="anchor" href="#original-iv-estimates"></a>
-</h3>
-<p>IV methods offer an alternative route to estimate the causal effect
-of schooling on earnings without having data on those unobserved
-variables. The key is to find a new variable (the <em>instrument</em>)
-that changes the incentives to educational achievement, but is
-associated with earnings only through its effect on education. Card
-proposed exploiting the role of geographic differences in college
-accessibility. The variable <em>Proximity</em> encodes whether the
-individual grew up near a four-year college
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>).
-Indeed, students who grow up far from college may face higher
-educational costs, discouraging them from pursuing higher level studies.
-More importantly, however, Card argues that whether one lives near a
-college is not itself confounded with earnings, nor does it cause
-earnings apart from its effect on years of education.</p>
-<p>The <code>card</code> dataset is included in the package. The key
+individuals from the National Longitudinal Survey of Young Men. The key
 variables are:</p>
 <ul>
 <li>
@@ -155,30 +119,77 @@ variables are:</p>
 <p>There are also various covariates, such as experience
 (<code>exper</code>), experience squared (<code>expersq</code>), race
 (<code>black</code>), whether the individual lived in a standard
-metropolitan area (<code>smsa</code>) and geographic region dummies. One
-can load the dataset with the following command.</p>
+metropolitan area (<code>smsa</code>), and geographic region dummies.
+One can load the dataset with the following command.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load the package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carloscinelli.com/iv.sensemakr/">iv.sensemakr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># load the dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"card"</span><span class="op">)</span></span></code></pre></div>
-<p>Given the two assumptions articulated above, one can use
-<em>Proximity</em> as an IV for the effect of <em>Education</em> on
-<em>Earnings</em>. This estimate is given by the ratio of two OLS
-coefficients, one measuring the effect of <em>Proximity</em> on
-<em>Earnings</em> (the <em>reduced form</em>), and another measuring the
-effect of <em>Proximity</em> on <em>Education</em> (the <em>first
-stage</em>). One can obtain such estimates using the
-<code>iv.sensemakr</code> using the <code><a href="../reference/iv_fit.html">iv_fit()</a></code> function. The
-function <code><a href="../reference/iv_fit.html">iv_fit()</a></code> takes as input vectors for the outcome
-<code>y</code>, treatment <code>d</code>, instrument <code>z</code>, and
-an optional covariate matrix <code>x</code>. It computes IV estimates
-using the Anderson-Rubin (AR) approach, which is numerically equivalent
-to Two-Stage Least Squares (2SLS) for point estimation, but constructs
-confidence intervals via test inversion, a procedure that has correct
-coverage regardless of instrument strength.</p>
+</div>
+<div class="section level3">
+<h3 id="ols-findings-and-the-ovb-problem">OLS findings and the OVB problem<a class="anchor" aria-label="anchor" href="#ols-findings-and-the-ovb-problem"></a>
+</h3>
+<p>In a regression of log wages
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>)
+on years of education
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>),
+adjusting for race, experience, and regional factors
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>),
+Card found that each additional year of schooling was associated with
+approximately 7.5% higher wages. We can reproduce this finding with a
+simple OLS regression.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># OLS regression of log wages on education and covariates</span></span>
+<span><span class="va">card.ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">lwage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="va">expersq</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">south</span> <span class="op">+</span> <span class="va">smsa</span> <span class="op">+</span> <span class="va">reg661</span> <span class="op">+</span></span>
+<span>                  <span class="va">reg662</span> <span class="op">+</span> <span class="va">reg663</span> <span class="op">+</span> <span class="va">reg664</span> <span class="op">+</span> <span class="va">reg665</span> <span class="op">+</span> <span class="va">reg666</span> <span class="op">+</span></span>
+<span>                  <span class="va">reg667</span> <span class="op">+</span> <span class="va">reg668</span> <span class="op">+</span> <span class="va">smsa66</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">card</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.ols</span><span class="op">)</span><span class="op">[</span><span class="st">"educ"</span><span class="op">]</span></span>
+<span><span class="co">#&gt;       educ </span></span>
+<span><span class="co">#&gt; 0.07469326</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">card.ols</span><span class="op">)</span><span class="op">[</span><span class="st">"educ"</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt;      2.5 %     97.5 % </span></span>
+<span><span class="co">#&gt; 0.06783385 0.08155266</span></span></code></pre></div>
+<p>However, educational achievement is not randomly assigned.
+Individuals who obtain more education may have higher wages for other
+reasons, such as family background, regional differences, or higher
+levels of some unobserved characteristic such as ability or motivation.
+Regression estimates such as the above, that adjust for only a partial
+list of characteristics, may thus suffer from omitted variable bias,
+likely overestimating the true returns to schooling. This motivates the
+use of instrumental variables.</p>
+</div>
+<div class="section level3">
+<h3 id="original-iv-estimates">Original IV estimates<a class="anchor" aria-label="anchor" href="#original-iv-estimates"></a>
+</h3>
+<p>IV methods offer an alternative route to estimating the causal effect
+of schooling on earnings without having data on those unobserved
+variables. The key is to find a new variable—the <em>instrument</em>,
+here denoted by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>—that
+changes the incentives to educational achievement, but is associated
+with earnings only through its effect on education. Card proposed
+exploiting the role of geographic differences in college accessibility
+as an instrumental variable. The instrument <code>nearc4</code> encodes
+whether the individual grew up near a four-year college. Students who
+grow up far from college may face higher educational costs, discouraging
+them from pursuing higher-level studies. More importantly, Card argues
+that whether one lives near a college is not itself confounded with
+earnings, nor does it cause earnings apart from its effect on years of
+education.</p>
+<p>Given these two assumptions, one can use <code>nearc4</code> as an IV
+for the effect of <code>educ</code> on <code>lwage</code>. Such
+estimates can be obtained using the <code><a href="../reference/iv_fit.html">iv_fit()</a></code> function,
+which takes as input vectors for the outcome <code>y</code>, treatment
+<code>d</code>, instrument <code>z</code>, and an optional covariate
+matrix <code>x</code>. It computes IV estimates using the Anderson-Rubin
+(AR) approach (Anderson and Rubin, 1949), which is numerically
+equivalent to Two-Stage Least Squares (2SLS) for point estimation, but
+constructs confidence intervals via test inversion, a procedure that has
+correct coverage regardless of instrument strength.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># prepare data</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">lwage</span>  <span class="co"># outcome: log wage</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">card</span><span class="op">$</span><span class="va">educ</span>   <span class="co"># treatment: years of education</span></span>
@@ -190,7 +201,7 @@ coverage regardless of instrument strength.</p>
 <span></span>
 <span><span class="co"># fit the IV model</span></span>
 <span><span class="va">card.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iv_fit.html">iv_fit</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">d</span>, <span class="va">z</span>, <span class="va">x</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span>
+<span><span class="va">card.fit</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Instrumental Variable Estimation</span></span>
 <span><span class="co">#&gt; (Anderson-Rubin Approach)</span></span>
@@ -201,49 +212,13 @@ coverage regardless of instrument strength.</p>
 <span><span class="co">#&gt;   p-value: 0.02</span></span>
 <span><span class="co">#&gt;   Conf. Interval: [0.025, 0.285]</span></span>
 <span><span class="co">#&gt; Note: H0 = 0, alpha = 0.05, df = 2994.</span></span>
-<span><span class="co">#&gt; ---------------------------------------------</span></span>
-<span><span class="co">#&gt; FS Estimates:</span></span>
-<span><span class="co">#&gt;   Coef. Estimate: 0.32</span></span>
-<span><span class="co">#&gt;   Standard Error: 0.0879</span></span>
-<span><span class="co">#&gt;   t-value: 3.64</span></span>
-<span><span class="co">#&gt;   p-value: 0.000276</span></span>
-<span><span class="co">#&gt;   Conf. Interval: [0.148, 0.492]</span></span>
-<span><span class="co">#&gt; Note: H0 = 0, alpha = 0.05, df = 2994.</span></span>
-<span><span class="co">#&gt; ---------------------------------------------</span></span>
-<span><span class="co">#&gt; RF Estimates:</span></span>
-<span><span class="co">#&gt;   Coef. Estimate: 0.0421</span></span>
-<span><span class="co">#&gt;   Standard Error: 0.0181</span></span>
-<span><span class="co">#&gt;   t-value: 2.33</span></span>
-<span><span class="co">#&gt;   p-value: 0.02</span></span>
-<span><span class="co">#&gt;   Conf. Interval: [0.007, 0.078]</span></span>
-<span><span class="co">#&gt; Note: H0 = 0, alpha = 0.05, df = 2994.</span></span>
-<span><span class="co">#&gt; =============================================</span></span></code></pre></div>
-<p>The first-stage (FS) coefficient reveals that those who grew up near
-a college have completed an additional 0.32 years of education, on
-average. The reduced-form (RF) shows that proximity is associated with
-about 4.2% higher earnings. The IV estimate is then
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>τ</mi><mo accent="true">̂</mo></mover><mo>≈</mo><mn>0.042</mn><mi>/</mi><mn>0.319</mn><mo>≈</mo><mn>0.132</mn></mrow><annotation encoding="application/x-tex">\hat\tau \approx 0.042/0.319 \approx 0.132</annotation></semantics></math>,
-suggesting that each additional year of schooling raises wages by about
-13.2%.</p>
-<p>One can also use <code><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef()</a></code> and <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> to
-extract individual components of fitted object:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># IV estimate and confidence interval</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        iv </span></span>
-<span><span class="co">#&gt; 0.1315038</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">card.fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IV conf. interval:</span></span>
-<span><span class="co">#&gt; [0.025, 0.285]</span></span>
-<span><span class="co">#&gt; level = 0.95</span></span>
-<span></span>
-<span><span class="co"># first-stage and reduced-form estimates</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.fit</span>, parm <span class="op">=</span> <span class="st">"fs"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        fs </span></span>
-<span><span class="co">#&gt; 0.3198989</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">card.fit</span>, parm <span class="op">=</span> <span class="st">"rf"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         rf </span></span>
-<span><span class="co">#&gt; 0.04206794</span></span></code></pre></div>
+<span><span class="co">#&gt; =============================================</span></span>
+<span><span class="co">#&gt; See summary for first stage and reduced form.</span></span></code></pre></div>
+<p>The IV estimate suggests that each additional year of schooling
+raises wages by about 13.2%, which is not only positive but, perhaps
+surprisingly, much higher than the simple OLS estimate of 7.5%. But how
+much can we trust the IV estimate? Is proximity to college really a
+valid instrument?</p>
 </div>
 <div class="section level3">
 <h3 id="the-iv-estimate-may-suffer-from-omitted-variable-bias">The IV estimate may suffer from omitted variable bias<a class="anchor" aria-label="anchor" href="#the-iv-estimate-may-suffer-from-omitted-variable-bias"></a>
@@ -251,18 +226,17 @@ extract individual components of fitted object:</p>
 <p>The previous IV estimate relies on the assumption that, conditional
 on
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>,
-<em>Proximity</em> and <em>Earnings</em> are unconfounded, and the
-effect of <em>Proximity</em> on <em>Earnings</em> must go entirely
-through <em>Education</em>. As is often the case, neither assumption is
-easy to defend. The same factors that might confound the relationship
-between <em>Education</em> and <em>Earnings</em> could similarly
-confound the relationship between <em>Proximity</em> and
-<em>Earnings</em> (e.g., family wealth or connections). Moreover, the
-presence of a college nearby may be associated with high school quality,
-which in turn also affects earnings. Finally, geographic factors can
-make some localities likely to both have colleges nearby and lead to
-higher earnings—these are only coarsely conditioned on by the observed
-regional indicators, and residual biases may remain.</p>
+proximity to college and earnings are unconfounded, and that the effect
+of proximity on earnings goes entirely through education. As is often
+the case, neither assumption is easy to defend. The same factors that
+might confound the relationship between education and earnings could
+similarly confound the relationship between proximity to college and
+earnings (e.g., family wealth or connections). Moreover, the presence of
+a college nearby may be associated with high school quality, which in
+turn also affects earnings. Finally, geographic factors can make some
+localities likely to both have colleges nearby and lead to higher
+earnings—these are only coarsely conditioned on by the observed regional
+indicators, and residual biases may remain.</p>
 <p>Therefore, instead of adjusting for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
 only, we should have adjusted for <em>both</em> the observed covariates
@@ -270,20 +244,21 @@ only, we should have adjusted for <em>both</em> the observed covariates
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math>,
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math>
-stands for all unobserved factors necessary to make <em>Proximity</em> a
-valid instrument for the effect of <em>Education</em> on
-<em>Earnings</em>. How do the IV estimates from the model omitting
+stands for all unobserved factors necessary to make proximity to college
+a valid instrument for the effect of education on earnings. How do the
+IV estimates from the model omitting
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math>
-compare with the estimates we actually want, from the model with
+compare with the estimates we actually want, from the model that
+includes
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math>?</p>
 </div>
 <div class="section level3">
 <h3 id="sensitivity-analysis">Sensitivity analysis<a class="anchor" aria-label="anchor" href="#sensitivity-analysis"></a>
 </h3>
-<p>The main function of the package is <code><a href="../reference/sensemakr.html">sensemakr()</a></code>. This
-function takes an <code>iv_fit</code> object as input and performs the
-most commonly required sensitivity analyses, which can then be further
-explored. We begin the analysis by applying the function
+<p>The main function of the package is <code><a href="../reference/sensemakr.html">sensemakr()</a></code>. It
+takes an <code>iv_fit</code> object as input and performs the most
+commonly required sensitivity analyses, which can then be further
+explored with the print, summary, and plot methods. We begin by applying
 <code>sensemakr</code> to the <code>card.fit</code> object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># with all parameters shown explicitly</span></span>
@@ -292,23 +267,31 @@ explored. We begin the analysis by applying the function
 <span>                       kz <span class="op">=</span> <span class="fl">1</span>,               <span class="co"># benchmark multiplier for Z</span></span>
 <span>                       ky <span class="op">=</span> <span class="fl">1</span>,               <span class="co"># benchmark multiplier for Y</span></span>
 <span>                       q <span class="op">=</span> <span class="fl">1</span>,                <span class="co"># reduce estimate to zero</span></span>
-<span>                       alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>         <span class="co"># significance level)</span></span></code></pre></div>
-<p>The arguments of the call are: - <code>model</code>: the
-<code>iv_fit</code> object with the original IV regression; -
-<code>benchmark_covariates</code>: the names of observed covariates that
-will be used to bound the plausible strength of the omitted variables.
-Here we use <code>"black"</code> (an indicator of race) and
-<code>"smsa"</code> (an indicator of whether the individual lived in a
-standard metropolitan area). - <code>kz</code>, <code>ky</code>: these
-arguments parameterize how many times stronger the confounder is related
-to the instrument (kz) and to the outcome (ky) in comparison to the
-observed benchmark covariates. - <code>q</code>: this allows the user to
-specify what fraction of the effect estimate would have to be explained
-away to be problematic. Setting <code>q = 1</code>, as we do here, means
-that a reduction of 100% of the current effect estimate, that is, a true
-effect of zero, would be deemed problematic. The default is
-<code>1</code>. - <code>alpha</code>: significance level of interest for
-making statistical inferences. The default is <code>0.05</code></p>
+<span>                       alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>         <span class="co"># significance level</span></span></code></pre></div>
+<p>The arguments of the call are:</p>
+<ul>
+<li><p><code>model</code>: the <code>iv_fit</code> object with the
+original IV regression.</p></li>
+<li><p><code>benchmark_covariates</code>: the names of observed
+covariates that will be used to bound the plausible strength of the
+omitted variables. Here we use <code>"black"</code> (an indicator of
+race) and <code>"smsa"</code> (an indicator of whether the individual
+lived in a standard metropolitan area).</p></li>
+<li><p><code>kz</code>, <code>ky</code>: these arguments parameterize
+how many times stronger omitted variables are related to the instrument
+(<code>kz</code>) and to the untreated potential outcome
+(<code>ky</code>) in comparison to the observed benchmark covariates.
+For example, setting <code>kz=1</code> and <code>ky=1</code> means that
+we will consider unobserved confounders or side-effects as strong as
+<code>"black"</code> or <code>"smsa"</code>.</p></li>
+<li><p><code>q</code>: the fraction of the effect estimate that would
+have to be explained away to be deemed problematic. Setting
+<code>q = 1</code>, as we do here, means that a reduction of 100% of the
+current effect estimate—that is, a true effect of zero—would be
+problematic. The default is <code>1</code>.</p></li>
+<li><p><code>alpha</code>: significance level of interest for
+statistical inference. The default is <code>0.05</code>.</p></li>
+</ul>
 <p>Using the default arguments, one can simplify the previous call
 to:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -346,14 +329,14 @@ suited for routine reporting.</p>
 <p>The robustness value (RV) describes the minimum partial
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>
 that confounders or side-effects would need to have with <em>both</em>
-the instrument and the outcome in order to make the adjusted confidence
-interval include zero. In the Card example, the RV is about 0.67%,
-revealing that confounders or side-effects explaining 0.67% of the
-residual variation both of <em>Proximity</em> and of (log)
-<em>Earnings</em> are already sufficiently strong to make the IV
-estimate statistically insignificant. On the other hand, confounders
-that do <em>not</em> explain at least 0.67% of the residual variation
-both of the instrument and of the outcome are not sufficiently strong to
+the instrument and the untreated potential outcome in order to make the
+adjusted confidence interval include zero. In the Card example, the RV
+is about 0.67%, revealing that confounders or side-effects explaining
+0.67% of the residual variation of both the instrument and the potential
+outcome are already sufficiently strong to make the IV estimate
+statistically insignificant. On the other hand, confounders that do
+<em>not</em> explain at least 0.67% of the residual variation of both
+the instrument and the potential outcome are not sufficiently strong to
 do so.</p>
 <p>The extreme robustness value (XRV) describes the minimum strength of
 association that omitted variables need to have with the <em>instrument
@@ -367,26 +350,29 @@ which confounders may explain an arbitrarily large share of the
 outcome’s residual variation, and asks how much of the instrument’s
 variation they would still need to explain.</p>
 <p>These are useful quantities that summarize what we need to know in
-order to safely rule out confounders or side-effects of the instrument
-that are deemed to be problematic. Interpreting these values requires
-domain knowledge about the data generating process. Are the values of
-0.67% or 0.05% enough to be confident in the original findings of this
-study? One way to assess the plausibility of omitted variables with such
-strength is to entertain the idea of confounders or side-effects as
-strong as observed covariates. That is given by the table named “Bounds
-on Omitted Variable Bias,” which shows how strong omitted variables
-would be if they were as strong as <code>black</code> or
-<code>smsa</code>. As we can see, such variables would be sufficiently
-strong to overturn the results of the original study.</p>
+order to safely rule out confounders or side-effects that are deemed
+problematic. Interpreting these values requires domain knowledge about
+the data-generating process. Are values of 0.67% or 0.05% enough to be
+confident in the original findings? One way to assess the plausibility
+of omitted variables with such strength is to consider confounders or
+side-effects as strong as observed covariates. This is given by the
+table named “Bounds on Omitted Variable Bias,” which shows how strong
+omitted variables would be if they were as strong as <code>black</code>
+or <code>smsa</code>. As we can see, such variables would be
+sufficiently strong to overturn the results of the original study. Since
+it is not very difficult to imagine residual confounding as strong or
+stronger than those variables (e.g., parental income, finer-grained
+geographic location, etc), these results are already sufficient to call
+into question the strength of evidence provided by this study.</p>
 </div>
 <div class="section level4">
 <h4 id="sensitivity-contour-plots">Sensitivity contour plots<a class="anchor" aria-label="anchor" href="#sensitivity-contour-plots"></a>
 </h4>
 <p>The previous sensitivity table provides a good summary of how robust
-the current estimate is to unobserved confounding. However, researchers
-may be willing to refine their analysis by visually exploring the whole
-range of possible estimates that omitted variables with different
-strengths could cause. For this, one can use the plot method for
+the current estimate is to confounding. However, researchers may wish to
+refine their analysis by visually exploring the full range of possible
+estimates that omitted variables of different strengths could produce.
+For this, one can use the <code>plot</code> method for
 <code>sensemakr</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">card.sens</span>, lim <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span></span></code></pre></div>
@@ -401,36 +387,41 @@ the hypothetical partial
 of omitted variables with the untreated potential outcome. The contour
 lines show what the lower or upper limit of the confidence interval
 would be, had we adjusted for omitted variables with such hypothetical
-strengths. The red dashed line marks the critical threshold (zero), as
-well as the boundary beyond which the confidence intervals become
-unbounded. The labeled points show the benchmark bounds for the observed
-covariates <code>black</code> and <code>smsa</code>, indicating where
-confounders of comparable strength would fall on this plot.</p>
-<p>The point labeled “Observed” at the origin represents the original IV
-estimate, which assumes no violation of the IV assumptions. As we move
-away from the origin—that is, as the hypothetical omitted variables
-become stronger—the confidence interval widens.</p>
+strengths. The point labeled “Observed” at the origin represents the
+original IV estimate, which assumes no violation of the IV assumptions.
+As we move away from the origin—that is, as the hypothetical omitted
+variables become stronger—the confidence interval widens. The red dashed
+line marks both the critical threshold (zero), as well as the boundary
+beyond which the confidence intervals become unbounded. The labeled
+points show the benchmark bounds for the observed covariates
+<code>black</code> and <code>smsa</code>, indicating where confounders
+of comparable strength would fall on this plot. Note that any other
+scenario can also be contemplated here, by simply picking different
+pairs of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>
+values. As we had seen in our previous analysis, confounding as strong
+as <code>"smsa"</code> or <code>"black"</code> could lead to an interval
+of [-0.02, 0.40], which includes not only implausibly high values (40%)
+but also negative values (-2%) showing that the IV estimate is very
+fragile to any residual confounding of such magnitudes.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<ul>
-<li><p>Anderson, T.W. and Rubin, H. (1949), “Estimation of the
-parameters of a single equation in a complete system of stochastic
-equations,” <em>Annals of Mathematical Statistics</em>, 20,
-46–63.</p></li>
-<li><p>Card, D. (1995), “Using geographic variation in college proximity
-to estimate the return to schooling,” in <em>Aspects of Labour Market
-Behaviour: Essays in Honour of John Vanderkamp</em>.</p></li>
-<li><p>Cinelli, C. and Hazlett, C. (2020), “Making Sense of Sensitivity:
-Extending Omitted Variable Bias,” <em>Journal of the Royal Statistical
-Society, Series B (Statistical Methodology)</em>. <a href="https://doi.org/10.1111/rssb.12348" class="external-link">doi:10.1111/rssb.12348</a>.</p></li>
-<li><p>Cinelli, C. and Hazlett, C. (2025), “An Omitted Variable Bias
-Framework for Sensitivity Analysis of Instrumental Variables,”
-<em>Biometrika</em>. <a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">doi:10.1093/biomet/asaf004</a>.</p></li>
-</ul>
+<p>Anderson, T.W. and Rubin, H. (1949), “Estimation of the parameters of
+a single equation in a complete system of stochastic equations.”
+<em>Annals of Mathematical Statistics</em>, 20, 46–63.</p>
+<p>Card, D. (1993). Using geographic variation in college proximity to
+estimate the return to schooling. Technical report, National Bureau of
+Economic Research.</p>
+<p>Cinelli, C. and Hazlett, C. (2020), “Making sense of sensitivity:
+Extending omitted variable bias.” <em>Journal of the Royal Statistical
+Society, Series B (Statistical Methodology)</em>, 82(1), 39–67. <a href="https://doi.org/10.1111/rssb.12348" class="external-link">doi:10.1111/rssb.12348</a>.</p>
+<p>Cinelli, C. and Hazlett, C. (2025), “An omitted variable bias
+framework for sensitivity analysis of instrumental variables.”
+<em>Biometrika</em>, 112(1). <a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">doi:10.1093/biomet/asaf004</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
