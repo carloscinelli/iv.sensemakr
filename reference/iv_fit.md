@@ -82,8 +82,6 @@ An object of class `iv_fit`, containing:
   the call, such as the null hypothesis `h0` and the significance level
   `alpha`.
 
-@returns The function returns an object of class `iv_fit`.
-
 ## References
 
 Anderson, T.W. and Rubin, H. (1949), Estimation of the parameters of a
