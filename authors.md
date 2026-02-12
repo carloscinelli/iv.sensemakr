@@ -11,7 +11,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/carloscinelli/iv.sensemakr/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/carloscinelli/iv.sensemakr/blob/v0.1.0/inst/CITATION)
 
 Cinelli C, Hazlett C (2026). *iv.sensemakr: Sensitivity Analysis Tools
 for Instrumental Variable Estimates*. R package version 0.1.0,
