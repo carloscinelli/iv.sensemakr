@@ -9,6 +9,9 @@ Analysis of Instrumental Variables”, *Biometrika*
 
 # News
 
+- `iv.sensemakr` is now on
+  [CRAN!](https://CRAN.R-project.org/package=iv.sensemakr)
+
 - Package website [is now
   online.](https://carloscinelli.com/iv.sensemakr/)
 
@@ -23,22 +26,20 @@ Analysis of Instrumental Variables”, *Biometrika*
 - Watch the [video of the talk at
   JSM.](https://www.youtube.com/watch?v=0b5VYWh8fN4)
 
-# Development version
+# Installation
 
-To install the development version on GitHub make sure you have the
-package `devtools` installed.
+To install `iv.sensemakr` from CRAN:
 
 ``` r
-# install.packages("devtools") 
-devtools::install_github("carloscinelli/iv.sensemakr")
+install.packages("iv.sensemakr")
 ```
 
-Please also make sure you have the latest version of `sensemakr`
-installed.
+To install the development version from GitHub, make sure you have the
+package `devtools` installed:
 
 ``` r
-# install.packages("devtools") 
-devtools::install_github("carloscinelli/sensemakr")
+# install.packages("devtools")
+devtools::install_github("carloscinelli/iv.sensemakr")
 ```
 
 # Basic usage
