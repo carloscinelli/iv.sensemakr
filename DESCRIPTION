@@ -1,7 +1,7 @@
 Package: iv.sensemakr
 Type: Package
 Title: Sensitivity Analysis Tools for Instrumental Variable Estimates
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person(given = "Carlos",
            family = "Cinelli",
