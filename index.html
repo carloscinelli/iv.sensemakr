@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">iv.sensemakr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@
 <h1 id="news">News<a class="anchor" aria-label="anchor" href="#news"></a>
 </h1>
 <ul>
+<li><p><code>iv.sensemakr</code> is now on <a href="https://CRAN.R-project.org/package=iv.sensemakr" class="external-link">CRAN!</a></p></li>
 <li><p>Package website <a href="https://carloscinelli.com/iv.sensemakr/">is now online.</a></p></li>
 <li><p>Paper published in <a href="https://doi.org/10.1093/biomet/asaf004" class="external-link">Biometrika.</a> You can find a <a href="https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20-%20OVB%20for%20IV.pdf" class="external-link">free version here.</a>.</p></li>
 <li><p>Watch the <a href="https://www.youtube.com/watch?v=ykZqPB1FPNo" class="external-link">video of the talk at PCIC.</a></p></li>
@@ -62,16 +63,15 @@
 </ul>
 </div>
 <div class="section level1">
-<h1 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>To install the development version on GitHub make sure you have the package <code>devtools</code> installed.</p>
+<p>To install <code>iv.sensemakr</code> from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools") </span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"carloscinelli/iv.sensemakr"</span><span class="op">)</span></span></code></pre></div>
-<p>Please also make sure you have the latest version of <code>sensemakr</code> installed.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"iv.sensemakr"</span><span class="op">)</span></span></code></pre></div>
+<p>To install the development version from GitHub, make sure you have the package <code>devtools</code> installed:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools") </span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"carloscinelli/sensemakr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"carloscinelli/iv.sensemakr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
@@ -138,7 +138,7 @@
 <span></span>
 <span><span class="co"># sensitivity contour plot</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">card.sens</span>, lim <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-basic-usage-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-basic-usage-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># latex code for sensitivity table</span></span>
@@ -221,6 +221,11 @@ Note: df = 2994; Bound ( 1x black ): R<sup>2</sup><sub>Z~W|X</sub> = 0.2%, R<sup
 </td>
 </tr>
 </table>
+</div>
+<div class="section level1">
+<h1 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h1>
+<p>This research was supported in part by the Royalty Research Fund at the University of Washington, and by the National Science Foundation Grant No. MMS-2417955.</p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">

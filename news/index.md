@@ -2,6 +2,8 @@
 
 ## iv.sensemakr 0.1.0
 
+CRAN release: 2026-02-11
+
 ### Paper
 
 - Cinelli, C. and Hazlett, C. (2025), “An Omitted Variable Bias
