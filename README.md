@@ -120,7 +120,7 @@ card.sens
 plot(card.sens, lim = 0.09)
 ```
 
-<img src="man/figures/README-basic-usage-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-basic-usage-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -258,3 +258,9 @@ Note: df = 2994; Bound ( 1x black ): R<sup>2</sup><sub>Z~W\|X</sub> =
 </tr>
 
 </table>
+
+# Acknowledgements
+
+This research was supported in part by the Royalty Research Fund at the
+University of Washington, and by the National Science Foundation Grant
+No. MMS-2417955.
